@@ -1,0 +1,4 @@
+node_modules
+cloudiary_nodejs
+**/.env
+**/.env.development
