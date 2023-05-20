@@ -113,6 +113,7 @@ const userSchema = new mongoose.Schema({
   shoppingCart: { type: [ShoppingCartItemSchema], default: [] },
   address: { type: AddressSchema, default: {} },
   payment: { type: PaymentSchema, default: {} },
+  createDate: { type: String, default: "" },
   tradeHistory: { type: [TradeHistoryItemSchema], default: [] },
 });
 const User = new mongoose.model("user", userSchema);

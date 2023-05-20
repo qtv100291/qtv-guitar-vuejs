@@ -1,0 +1,3664 @@
+<template>
+  <main class="container">
+    <div class="popup-container">
+      <div class="popup-messenger">
+        Đã Thêm Vào Giỏ Hàng
+        <div class="check-mark-icon">
+          <div class="circle-left">
+            <div class="circle-left-rotate"></div>
+          </div>
+          <div class="circle-right">
+            <div class="circle-right-rotate"></div>
+          </div>
+          <div class="check-mark-line-1"><span></span></div>
+          <div class="check-mark-line-2"><span></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="navigation">
+      <router-link to="/">Trang Chủ</router-link
+      >&nbsp;&nbsp;/&nbsp;&nbsp;<router-link to="/guitar-show"
+        >Guitar Show</router-link
+      >&nbsp;&nbsp;/&nbsp;&nbsp;
+      <div>{{ guitarShowData.name }}</div>
+    </div>
+    <!-- <div class="modal-seat-map">
+      <div class="close-icon">
+        <img src="/images/GuitarShow/Item/close-white.svg" alt="close-icon" />
+      </div>
+      <div class="seat-map-photo">
+        <img src="/images/GuitarShow/Item/item4-seatmap.jpg" alt="seat-map" />
+      </div>
+    </div> -->
+    <div class="main-container">
+      <div class="show-title">{{ guitarShowData.name }}</div>
+      <div class="show-item">
+        <div class="show-main-content">
+          <div class="show-detail">
+            <div
+              class="show-presentation"
+              v-if="guitarShowData.content"
+              v-html="guitarShowData.content"
+            ></div>
+          </div>
+          <div class="show-detail">
+            <div class="show-presentation">
+              <div class="showpresentation-title">Thông Tin Bán Vé</div>
+              <div class="line-break"></div>
+              <div class="show-presentation-photo border seat-map">
+                <!-- <img
+                  src="/images/GuitarShow/Item/item4-seatmap.jpg"
+                  alt="Sơ đồ chỗ ngồi"
+                /> -->
+                <seat-map-plan
+                  :data="guitarShowData"
+                  :seatReserved="[]"
+                ></seat-map-plan>
+              </div>
+              <div class="photo-note">
+                <p>Sơ Đồ Sân Khấu Theo Giá Vé</p>
+                <p>( Click vào ảnh để xem sơ đồ phóng to )</p>
+              </div>
+              <div class="article-paragraph-normal price">
+                Giá vé hạng Silver : 300.000 VND
+              </div>
+              <div class="article-paragraph-normal price">
+                Giá vé hạng Gold : 400.000 VND
+              </div>
+              <div class="article-paragraph-normal price">
+                Giá vé hạng Vip : 500.000 VND
+              </div>
+              <div class="article-paragraph-normal price">
+                Giá vé hạng SVip : 1.000.000 VND
+              </div>
+              <div class="article-paragraph-normal">
+                Các bạn muốn mua vé có thể đặt trên trang web hoặc đến mua trực
+                tiếp tại QTV Guitar Shop. Mọi thông tin chi tiết xin mời liên hệ
+                số Hotline của chúng tôi :
+                <a
+                  href="tel:19001570"
+                  style="text-decoration: none; color: black"
+                  >19001570</a
+                >.
+              </div>
+              <div class="article-paragraph-normal end-paragraph">
+                Hẹn gặp các bạn tại buổi biểu diễn.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="order-ticket-part">
+          <div class="title-ticket-part">{{ guitarShowData.name }}</div>
+          <div class="line-break"></div>
+          <div class="show-information">
+            <div class="show-information-part-1">
+              <div class="show-time">
+                <img src="/images/GuitarShow/clockIcon.png" alt="đồng hồ" />
+                <div>Từ 08 PM đến 11 PM</div>
+              </div>
+              <div class="show-date">
+                <img src="/images/GuitarShow/calendar 1.png" alt="lịch" />
+                <div>Ngày 23 tháng 5 năm 2020</div>
+              </div>
+              <div class="show-location">
+                <img
+                  src="/images/GuitarShow/maps-and-flags  1.png"
+                  alt="địa điểm"
+                />
+                <div>Nhà hát Tuổi Trẻ</div>
+              </div>
+              <div class="show-address">
+                <div>11 Ngô Thì Nhậm, Hai Bà Trưng, Hà Nội</div>
+              </div>
+            </div>
+            <div class="show-information-part-2">
+              <div class="ticket-class">
+                <label for="ticket-option">Hạng Vé</label>
+                <select name="" id="ticket-option" class="item4">
+                  <option value="Hạng Silver">&nbsp;Hạng Silver</option>
+                  <option value="Hạng Gold">&nbsp;Hạng Gold</option>
+                  <option value="Hạng Vip">&nbsp;Hạng Vip</option>
+                  <option value="Hạng SVip">&nbsp;Hạng SVip</option>
+                </select>
+              </div>
+              <div class="ticket-price">
+                <div>
+                  Giá Tiền :
+                  <span class="price-value value-4">300.000</span> VND
+                </div>
+              </div>
+              <div class="ticket-number">
+                <label for="ticket-quantity-4">Số Lượng</label>
+                <div class="minus-item">
+                  <img
+                    src="/images/GuitarShow/minus_24px.png"
+                    alt="minus-item"
+                  />
+                </div>
+                <input type="text" value="1" id="ticket-quantity" />
+                <div class="plus-item">
+                  <img src="/images/GuitarShow/plus.png" alt="plus-item" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="add-to-cart-button">Thêm Vào Giỏ Hàng</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
+
+<script>
+import { onMounted, reactive } from "vue";
+import { useRoute } from "vue-router";
+import { getGuitarShow } from "../api/guitarShow";
+import SeatMapPlan from "../components/GuitarShowDetail/SeatMap.vue";
+export default {
+  props: [],
+  components: { SeatMapPlan },
+  setup() {
+    const guitarShowData = reactive({});
+    const route = useRoute();
+    const { guitarShowId } = route.params;
+    onMounted(async () => {
+      const guitarShow = await getGuitarShow(guitarShowId);
+      console.log(guitarShow);
+      Object.assign(guitarShowData, guitarShow);
+    });
+    return { guitarShowData };
+  },
+};
+</script>
+
+<style scoped>
+@media only screen and (min-width: 1366px) {
+  /*Header*/
+  .menu-bar-item-1 {
+    border: none;
+  }
+
+  /*Main*/
+  .popup-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 15;
+  }
+  .popup-messenger {
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    background-color: white;
+    top: 30%;
+    left: calc(50% - 150px);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    color: black;
+    border-radius: 10px;
+  }
+  .add-to-cart {
+    opacity: 1;
+  }
+  .popup-messenger > img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .check-mark-icon {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+  .circle-left {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .circle-left-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .circle-left-rotate.show {
+    animation: rotate-circle 0.1s 0.4s linear forwards;
+  }
+  .circle-right {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: 24px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle-right-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .circle-right-rotate.show {
+    animation: rotate-circle 0.1s 0.3s linear forwards;
+  }
+  @keyframes rotate-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  .check-mark-line-1 {
+    height: 15px;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+  .check-mark-line-1 span {
+    display: block;
+    width: 3px;
+    height: 0;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-1 span.show {
+    animation: line-1 0.1s 0.5s linear forwards;
+  }
+  .check-mark-line-2 {
+    height: 3px;
+    width: 25px;
+    background-color: transparent;
+    position: absolute;
+    top: 27px;
+    left: 17px;
+  }
+  .check-mark-line-2 span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-2 span.show {
+    animation: line-2 0.1s 0.6s linear forwards;
+  }
+  @keyframes line-1 {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 15px;
+    }
+  }
+  @keyframes line-2 {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 25px;
+    }
+  }
+  .container {
+    margin-top: 82px;
+    width: 100%;
+  }
+  .banner {
+    width: 95%;
+    max-width: 1200px;
+    height: 500px;
+    margin: 0 auto;
+  }
+  .banner > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .container.scroll {
+    margin-top: 144px;
+    position: relative;
+  }
+  .main-container {
+    width: 95%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .navigation {
+    width: 95%;
+    max-width: 1200px;
+    margin: 20px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+  }
+  .navigation > a {
+    text-decoration: none;
+    color: black;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .navigation > a:nth-child(1):hover {
+    color: red;
+  }
+  .navigation > a:nth-child(2):hover {
+    color: red;
+  }
+  .navigation > div {
+    display: inline;
+    color: #6c757d;
+    font-family: Roboto;
+  }
+  .modal-seat-map {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+  }
+  .seat-map-photo {
+    height: 85vh;
+    margin: 5vw auto;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+  }
+  .seat-map-photo > img {
+    height: 100%;
+  }
+  .close-icon {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 1vw;
+    right: 1vw;
+    opacity: 0.5;
+  }
+  .close-icon:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  .close-icon > img {
+    width: 100%;
+    height: 100%;
+  }
+  .show-title {
+    margin-top: 30px;
+    width: 850px;
+    height: 50px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 50px;
+    color: #000000;
+  }
+  .show-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .show-main-content {
+    width: 100%;
+    max-width: 800px;
+  }
+  .show-detail {
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  .show-presentation {
+    width: 100%;
+  }
+  /* .border {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+  } */
+  /* .border:hover {
+    cursor: pointer;
+  } */
+  .show-presentation :deep() .showpresentation-title {
+    width: 90%;
+    height: 90px;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .show-presentation :deep() .line-break {
+    width: 100%;
+    height: 1px;
+    background-color: #c4c4c4;
+  }
+  .show-presentation :deep() .show-presentation-photo {
+    width: 95vw;
+    max-width: 700px;
+    margin: 25px auto 25px auto;
+    /* height: 54vw; */
+    /* max-height: 400px; */
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .show-presentation :deep() .show-presentation-photo > img {
+    width: 100%;
+    /* height: 100%; */
+  }
+  .show-presentation :deep() .article-paragraph-normal {
+    width: 90%;
+    max-width: 700px;
+    margin: 10px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .show-presentation :deep() .end-paragraph {
+    margin-bottom: 20px;
+  }
+  .photo-note {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .photo-note > p:nth-child(1) {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .photo-note > p:nth-child(2) {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .price {
+    font-weight: bold;
+  }
+  .order-ticket-part {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    height: 470px;
+    position: sticky;
+    top: 92px;
+  }
+  .title-ticket-part {
+    margin: 15px auto;
+    width: 90%;
+    height: 60px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+  }
+
+  .show-time {
+    width: 90%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-time > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-time > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-date {
+    width: 90%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-date > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-location {
+    width: 90%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-location > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-location > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-address {
+    width: 90%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-address > div {
+    height: 30px;
+    margin-left: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .ticket-class {
+    width: 90%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-class > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .ticket-class > select {
+    margin-left: 20px;
+    width: 185px;
+    height: 32px;
+    outline: none;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    border: 1px solid #c4c4c4;
+  }
+  .ticket-class > select > option {
+    appearance: none;
+    padding-left: 5px;
+  }
+  .ticket-price {
+    width: 90%;
+    margin: 20px auto 0px auto;
+  }
+  .ticket-price > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .price-value {
+    margin-left: 10px;
+  }
+  .ticket-number {
+    width: 90%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-number > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .minus-item {
+    margin-left: 15px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px 0px 0px 3px;
+  }
+  .minus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .minus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .ticket-number > input {
+    width: 117px;
+    height: 34px;
+    box-sizing: border-box;
+    outline: none;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #c4c4c4;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .plus-item {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 3px 3px 0px;
+  }
+  .plus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .plus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .add-to-cart-button {
+    width: 90%;
+    max-width: 200px;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+  }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1365px) {
+  /*Header*/
+  .menu-bar-item-1 {
+    border: none;
+  }
+  /*Main*/
+  .popup-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 15;
+  }
+  .popup-messenger {
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    background-color: white;
+    top: 30%;
+    left: calc(50% - 150px);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    color: black;
+    border-radius: 10px;
+  }
+  .add-to-cart {
+    opacity: 1;
+  }
+  .popup-messenger > img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .check-mark-icon {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+  .circle-left {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .circle-left-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .circle-left-rotate.show {
+    animation: rotate-circle 0.1s 0.4s linear forwards;
+  }
+  .circle-right {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: 24px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle-right-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .circle-right-rotate.show {
+    animation: rotate-circle 0.1s 0.3s linear forwards;
+  }
+  @keyframes rotate-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  .check-mark-line-1 {
+    height: 15px;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+  .check-mark-line-1 span {
+    display: block;
+    width: 3px;
+    height: 0;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-1 span.show {
+    animation: line-1 0.1s 0.5s linear forwards;
+  }
+  .check-mark-line-2 {
+    height: 3px;
+    width: 25px;
+    background-color: transparent;
+    position: absolute;
+    top: 27px;
+    left: 17px;
+  }
+  .check-mark-line-2 span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-2 span.show {
+    animation: line-2 0.1s 0.6s linear forwards;
+  }
+  @keyframes line-1 {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 15px;
+    }
+  }
+  @keyframes line-2 {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 25px;
+    }
+  }
+  .container {
+    margin-top: 82px;
+    width: 100%;
+  }
+  .banner {
+    width: 1000px;
+    height: 450px;
+    margin: 0 auto;
+  }
+  .banner > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .container.scroll {
+    margin-top: 144px;
+    position: relative;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .navigation {
+    width: 1000px;
+    margin: 20px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+  }
+  .navigation > a {
+    text-decoration: none;
+    color: black;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .navigation > a:nth-child(1):hover {
+    color: red;
+  }
+  .navigation > a:nth-child(2):hover {
+    color: red;
+  }
+  .navigation > div {
+    display: inline;
+    color: #6c757d;
+    font-family: Roboto;
+  }
+  .modal-seat-map {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+  }
+  .seat-map-photo {
+    height: 85vh;
+    margin: 5vw auto;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .seat-map-photo > img {
+    height: 100%;
+  }
+  .close-icon {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 1vw;
+    right: 1vw;
+    opacity: 0.5;
+  }
+  .close-icon:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  .close-icon > img {
+    width: 100%;
+    height: 100%;
+  }
+  .show-title {
+    width: 1000px;
+    margin: 0 auto;
+    margin-top: 30px;
+    height: 50px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 45px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .show-item {
+    width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  .show-main-content {
+    width: 675px;
+  }
+  .show-detail {
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  .show-presentation {
+    width: 100%;
+  }
+  /* .border {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+  } */
+  /* .border:hover {
+    cursor: pointer;
+  } */
+  .show-presentation :deep() .showpresentation-title {
+    width: 90%;
+    height: 90px;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .show-presentation :deep() .line-break {
+    width: 100%;
+    height: 1px;
+    background-color: #c4c4c4;
+  }
+  .show-presentation :deep() .show-presentation-photo {
+    width: 90%;
+    margin: 25px auto 25px auto;
+    /* height: 350px; */
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .show-presentation :deep() .article-paragraph-normal {
+    width: 90%;
+    margin: 10px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .show-presentation :deep() .end-paragraph {
+    margin-bottom: 20px;
+  }
+  .photo-note {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .photo-note > p:nth-child(1) {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .photo-note > p:nth-child(2) {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .price {
+    font-weight: bold;
+  }
+  .order-ticket-part {
+    margin-top: 30px;
+    max-width: 300px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    position: sticky;
+    top: 92px;
+    padding-bottom: 25px;
+  }
+  .title-ticket-part {
+    margin: 15px auto;
+    width: 90%;
+    height: 60px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+  }
+  .show-time {
+    width: 95%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-time > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-time > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-date {
+    width: 95%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-date > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-location {
+    width: 95%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-location > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-location > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-address {
+    width: 95%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-address > div {
+    height: 30px;
+    margin-left: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .ticket-class {
+    width: 95%;
+    margin: 30px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-class > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .ticket-class > select {
+    margin-left: 20px;
+    width: 185px;
+    height: 32px;
+    outline: none;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    border: 1px solid #c4c4c4;
+  }
+  .ticket-class > select > option {
+    appearance: none;
+    padding-left: 5px;
+  }
+  .ticket-price {
+    width: 95%;
+    margin: 20px auto 0px auto;
+  }
+  .ticket-price > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .price-value {
+    margin-left: 10px;
+  }
+  .ticket-number {
+    width: 95%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-number > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .minus-item {
+    margin-left: 15px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px 0px 0px 3px;
+  }
+  .minus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .minus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .ticket-number > input {
+    width: 117px;
+    height: 34px;
+    box-sizing: border-box;
+    outline: none;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #c4c4c4;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .plus-item {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 3px 3px 0px;
+  }
+  .plus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .plus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .add-to-cart-button {
+    width: 90%;
+    max-width: 200px;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1023px) {
+  /*Header*/
+  .menu-bar-item-1 {
+    border: none;
+  }
+  .menu-mobile-container > a:nth-child(5) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .popup-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 15;
+  }
+  .popup-messenger {
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    background-color: white;
+    top: 35%;
+    left: calc(50% - 150px);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    color: black;
+    border-radius: 10px;
+  }
+  .add-to-cart {
+    opacity: 1;
+  }
+  .popup-messenger > img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .check-mark-icon {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+  .circle-left {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .circle-left-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .circle-left-rotate.show {
+    animation: rotate-circle 0.1s 0.4s linear forwards;
+  }
+  .circle-right {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: 24px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle-right-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .circle-right-rotate.show {
+    animation: rotate-circle 0.1s 0.3s linear forwards;
+  }
+  @keyframes rotate-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  .check-mark-line-1 {
+    height: 15px;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+  .check-mark-line-1 span {
+    display: block;
+    width: 3px;
+    height: 0;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-1 span.show {
+    animation: line-1 0.1s 0.5s linear forwards;
+  }
+  .check-mark-line-2 {
+    height: 3px;
+    width: 25px;
+    background-color: transparent;
+    position: absolute;
+    top: 27px;
+    left: 17px;
+  }
+  .check-mark-line-2 span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-2 span.show {
+    animation: line-2 0.1s 0.6s linear forwards;
+  }
+  @keyframes line-1 {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 15px;
+    }
+  }
+  @keyframes line-2 {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 25px;
+    }
+  }
+  .container {
+    margin-top: 124px;
+    width: 100%;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .navigation {
+    width: 90%;
+    margin: 20px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+  }
+  .navigation > a {
+    text-decoration: none;
+    color: black;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .navigation > a:nth-child(1):hover {
+    color: red;
+  }
+  .navigation > a:nth-child(3):hover {
+    color: red;
+  }
+  .navigation > div {
+    display: inline;
+    color: #6c757d;
+    font-family: Roboto;
+  }
+  .modal-seat-map {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+  }
+  .seat-map-photo {
+    margin: 20vw auto;
+    width: 95vw;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .seat-map-photo > img {
+    width: 100%;
+    min-width: 1000px;
+  }
+  .close-icon {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    top: 2vw;
+    right: 2vw;
+    opacity: 1;
+  }
+  .close-icon > img {
+    width: 100%;
+    height: 100%;
+  }
+  .show-title {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 30px;
+    height: 50px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 30px;
+    color: #000000;
+    text-align: center;
+  }
+  .show-item {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+  }
+  .show-main-content {
+    width: 700px;
+    margin: 0 auto;
+  }
+  .show-detail {
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  .show-presentation {
+    width: 100%;
+    margin: 0 auto;
+  }
+  /* .border {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+  } */
+  /* .border:hover {
+    cursor: pointer;
+  } */
+  .show-presentation :deep() .showpresentation-title {
+    width: 90%;
+    height: 90px;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .show-presentation :deep() .line-break {
+    width: 100%;
+    height: 1px;
+    background-color: #c4c4c4;
+  }
+  .show-presentation :deep() .show-presentation-photo {
+    width: 90%;
+    margin: 25px auto 25px auto;
+    /* height: 350px; */
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .show-presentation :deep() .article-paragraph-normal {
+    width: 90%;
+    margin: 10px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .show-presentation :deep() .end-paragraph {
+    margin-bottom: 20px;
+  }
+  .photo-note {
+    width: 70%;
+    margin: 0 auto;
+  }
+  .photo-note > p:nth-child(1) {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .photo-note > p:nth-child(2) {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .price {
+    font-weight: bold;
+  }
+  .order-ticket-part {
+    margin: 20px auto 0 auto;
+    width: 700px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding-bottom: 25px;
+  }
+  .title-ticket-part {
+    margin: 15px auto;
+    width: 90%;
+    height: 60px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    display: none;
+  }
+  .title-ticket-part + .line-break {
+    display: none;
+  }
+  .show-information {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+  }
+  .show-information-part-1 {
+    margin-top: 10px;
+    width: 45%;
+  }
+  .show-information-part-2 {
+    margin-top: 10px;
+    width: 45%;
+  }
+  .show-time {
+    width: 100%;
+    margin: 15px auto 0px 15px;
+    display: flex;
+    align-items: center;
+  }
+  .show-time > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-time > div {
+    height: 32px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-date {
+    width: 100%;
+    margin: 10px auto 0 15px;
+    display: flex;
+    align-items: center;
+  }
+  .show-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-date > div {
+    height: 32px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-location {
+    width: 100%;
+    margin: 10px auto 0 15px;
+    display: flex;
+    align-items: center;
+  }
+  .show-location > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-location > div {
+    height: 32px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-address {
+    width: 100%;
+    margin: 7px auto 0 15px;
+    display: flex;
+    align-items: center;
+  }
+  .show-address > div {
+    height: 32px;
+    margin-left: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .ticket-class {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-class > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .ticket-class > select {
+    margin-left: 20px;
+    width: 185px;
+    height: 32px;
+    outline: none;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    border: 1px solid #c4c4c4;
+  }
+  .ticket-class > select > option {
+    appearance: none;
+    padding-left: 5px;
+  }
+  .ticket-price {
+    width: 100%;
+    margin: 10px auto 0px auto;
+  }
+  .ticket-price > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .price-value {
+    margin-left: 10px;
+  }
+  .ticket-number {
+    width: 100%;
+    margin: 10px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-number > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .minus-item {
+    margin-left: 15px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px 0px 0px 3px;
+  }
+  .minus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .minus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .ticket-number > input {
+    width: 117px;
+    height: 34px;
+    box-sizing: border-box;
+    outline: none;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #c4c4c4;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .plus-item {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 3px 3px 0px;
+  }
+  .plus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .plus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .add-to-cart-button {
+    width: 90%;
+    max-width: 200px;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+  }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  /*Header*/
+  .menu-bar-item-1 {
+    border: none;
+  }
+  .menu-mobile-container > a:nth-child(5) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .popup-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 15;
+  }
+  .popup-messenger {
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    background-color: white;
+    top: 30%;
+    left: calc(50% - 150px);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    color: black;
+    border-radius: 10px;
+  }
+  .add-to-cart {
+    opacity: 1;
+  }
+  .popup-messenger > img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .check-mark-icon {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+  .circle-left {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .circle-left-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .circle-left-rotate.show {
+    animation: rotate-circle 0.1s 0.4s linear forwards;
+  }
+  .circle-right {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: 24px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle-right-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .circle-right-rotate.show {
+    animation: rotate-circle 0.1s 0.3s linear forwards;
+  }
+  @keyframes rotate-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  .check-mark-line-1 {
+    height: 15px;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+  .check-mark-line-1 span {
+    display: block;
+    width: 3px;
+    height: 0;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-1 span.show {
+    animation: line-1 0.1s 0.5s linear forwards;
+  }
+  .check-mark-line-2 {
+    height: 3px;
+    width: 25px;
+    background-color: transparent;
+    position: absolute;
+    top: 27px;
+    left: 17px;
+  }
+  .check-mark-line-2 span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-2 span.show {
+    animation: line-2 0.1s 0.6s linear forwards;
+  }
+  @keyframes line-1 {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 15px;
+    }
+  }
+  @keyframes line-2 {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 25px;
+    }
+  }
+  .container {
+    margin-top: 124px;
+    width: 100%;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .navigation {
+    width: 90%;
+    margin: 20px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+  }
+  .navigation > a {
+    text-decoration: none;
+    color: black;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .navigation > div {
+    display: inline;
+    color: #6c757d;
+    font-family: Roboto;
+  }
+  .modal-seat-map {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+  }
+  .seat-map-photo {
+    margin: 20vw auto;
+    width: 95vw;
+    overflow: auto;
+  }
+  .seat-map-photo > img {
+    width: 100%;
+  }
+  .close-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 1vw;
+    right: 1vw;
+    opacity: 1;
+  }
+  .close-icon > img {
+    width: 100%;
+    height: 100%;
+  }
+  .show-title {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 40px;
+    color: #000000;
+    text-align: center;
+  }
+  .show-item {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+  }
+  .show-main-content {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .show-detail {
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+  .show-presentation {
+    width: 100%;
+    margin: 0 auto;
+  }
+  /* .border {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+  } */
+  /* .border:hover {
+    cursor: pointer;
+  } */
+  .show-presentation :deep() .showpresentation-title {
+    width: 90%;
+    height: 70px;
+    margin: 0 auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 28px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .show-presentation :deep() .line-break {
+    width: 100%;
+    height: 1px;
+    background-color: #c4c4c4;
+    display: none;
+  }
+  .show-presentation :deep() .show-presentation-photo {
+    width: 90%;
+    margin: 10px auto 25px auto;
+    /* height: 270px; */
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .show-presentation :deep() .article-paragraph-normal {
+    width: 90%;
+    margin: 10px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .show-presentation :deep() .end-paragraph {
+    margin-bottom: 20px;
+  }
+  .photo-note {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .photo-note > p:nth-child(1) {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .photo-note > p:nth-child(2) {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    color: #000000;
+  }
+  .price {
+    font-weight: bold;
+  }
+  .order-ticket-part {
+    margin: 20px auto 0 auto;
+    width: 100%;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding-bottom: 25px;
+  }
+  .title-ticket-part {
+    margin: 15px auto;
+    width: 90%;
+    height: 60px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    display: none;
+  }
+  .show-information {
+    width: 100%;
+  }
+  .show-information-part-1 {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .show-information-part-2 {
+    width: 60%;
+    margin: 0 auto;
+  }
+  .show-time {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-time > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-time > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-date {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-date > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-location {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-location > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-location > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-address {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-address > div {
+    height: 30px;
+    margin-left: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .ticket-class {
+    width: 100%;
+    margin: 30px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-class > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .ticket-class > select {
+    margin-left: 20px;
+    width: 185px;
+    height: 32px;
+    outline: none;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    border: 1px solid #c4c4c4;
+  }
+  .ticket-class > select > option {
+    appearance: none;
+    padding-left: 5px;
+  }
+  .ticket-price {
+    width: 100%;
+    margin: 20px auto 0px auto;
+  }
+  .ticket-price > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .price-value {
+    margin-left: 10px;
+  }
+  .ticket-number {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-number > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .minus-item {
+    margin-left: 15px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px 0px 0px 3px;
+  }
+  .minus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .minus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .ticket-number > input {
+    width: 117px;
+    height: 34px;
+    box-sizing: border-box;
+    outline: none;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #c4c4c4;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .plus-item {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 3px 3px 0px;
+  }
+  .plus-item:hover {
+    background-color: rgb(219, 218, 218);
+    cursor: pointer;
+  }
+  .plus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .add-to-cart-button {
+    width: 90%;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+  }
+  /*footer*/
+  .subscription-part {
+    display: none;
+  }
+  footer {
+    margin-top: 30px;
+  }
+}
+
+@media only screen and (min-width: 351px) and (max-width: 576px) {
+  /*Header*/
+  .menu-bar-item-1 {
+    border: none;
+  }
+  .menu-mobile-container > a:nth-child(5) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .popup-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 15;
+  }
+  .popup-messenger {
+    width: 300px;
+    height: 100px;
+    position: absolute;
+    background-color: white;
+    top: 30%;
+    left: calc(50% - 150px);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    color: black;
+    border-radius: 10px;
+  }
+  .add-to-cart {
+    opacity: 1;
+  }
+  .popup-messenger > img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .check-mark-icon {
+    margin-left: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+  .circle-left {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .circle-left-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .circle-left-rotate.show {
+    animation: rotate-circle 0.1s 0.4s linear forwards;
+  }
+  .circle-right {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: 24px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle-right-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .circle-right-rotate.show {
+    animation: rotate-circle 0.1s 0.3s linear forwards;
+  }
+  @keyframes rotate-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  .check-mark-line-1 {
+    height: 15px;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+  .check-mark-line-1 span {
+    display: block;
+    width: 3px;
+    height: 0;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-1 span.show {
+    animation: line-1 0.1s 0.5s linear forwards;
+  }
+  .check-mark-line-2 {
+    height: 3px;
+    width: 25px;
+    background-color: transparent;
+    position: absolute;
+    top: 27px;
+    left: 17px;
+  }
+  .check-mark-line-2 span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-2 span.show {
+    animation: line-2 0.1s 0.6s linear forwards;
+  }
+  @keyframes line-1 {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 15px;
+    }
+  }
+  @keyframes line-2 {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 25px;
+    }
+  }
+  .container {
+    margin-top: 94px;
+    width: 100%;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .navigation {
+    width: 90%;
+    margin: 20px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+  }
+  .navigation > a {
+    text-decoration: none;
+    color: black;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .navigation > div {
+    display: inline;
+    color: #6c757d;
+    font-family: Roboto;
+  }
+  .modal-seat-map {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+  }
+  .seat-map-photo {
+    margin: 20vw auto;
+    width: 95vw;
+    overflow: auto;
+  }
+  .seat-map-photo > img {
+    width: 100%;
+  }
+  .close-icon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 1vw;
+    right: 1vw;
+    opacity: 1;
+  }
+  .close-icon > img {
+    width: 100%;
+    height: 100%;
+  }
+  .show-title {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 35px;
+    color: #000000;
+    text-align: center;
+  }
+  .show-item {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+  }
+  .show-main-content {
+    width: 100%;
+  }
+  .show-detail {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .show-presentation {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .show-presentation :deep() .showpresentation-title {
+    width: 100%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .show-presentation :deep() .line-break {
+    width: 100%;
+    height: 1px;
+    background-color: #c4c4c4;
+    display: none;
+  }
+  .show-presentation :deep() .show-presentation-photo {
+    width: 100%;
+    margin: 15px auto 15px auto;
+    /* height: 54vw; */
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .show-presentation :deep() .article-paragraph-normal {
+    width: 100%;
+    margin: 10px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .show-presentation :deep() .end-paragraph {
+    margin-bottom: 20px;
+  }
+  .photo-note {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .photo-note > p:nth-child(1) {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: center;
+    color: #000000;
+  }
+  .photo-note > p:nth-child(2) {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+  }
+  .price {
+    font-weight: bold;
+  }
+  .order-ticket-part {
+    margin: 0px auto 0 auto;
+    width: 100%;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #c4c4c4;
+  }
+  .title-ticket-part {
+    margin: 10px auto;
+    width: 90%;
+    height: 60px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    display: none;
+  }
+  .show-information {
+    width: 100%;
+  }
+  .show-information-part-1 {
+    margin-left: 0%;
+  }
+  .show-information-part-2 {
+    margin-left: 0%;
+  }
+  .show-time {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-time > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-time > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-date {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-date > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-location {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-location > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-location > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-address {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-address > div {
+    height: 30px;
+    margin-left: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .ticket-class {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-class > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .ticket-class > select {
+    margin-left: 20px;
+    width: 185px;
+    height: 32px;
+    outline: none;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    border: 1px solid #c4c4c4;
+  }
+  .ticket-class > select > option {
+    appearance: none;
+    padding-left: 5px;
+  }
+  .ticket-price {
+    width: 100%;
+    margin: 15px auto 0px auto;
+  }
+  .ticket-price > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .price-value {
+    margin-left: 10px;
+  }
+  .ticket-number {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-number > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .minus-item {
+    margin-left: 15px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px 0px 0px 3px;
+  }
+  .minus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .ticket-number > input {
+    width: 117px;
+    height: 34px;
+    box-sizing: border-box;
+    outline: none;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #c4c4c4;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .plus-item {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 3px 3px 0px;
+  }
+  .plus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .add-to-cart-button {
+    width: 100%;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+  }
+  /*footer*/
+  .subscription-part {
+    display: none;
+  }
+  footer {
+    margin-top: 10px;
+  }
+  .store-info-part {
+    width: 90%;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  /*Header*/
+  .menu-bar-item-1 {
+    border: none;
+  }
+  .menu-mobile-container > a:nth-child(5) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .popup-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: none;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 15;
+  }
+  .popup-messenger {
+    width: 220px;
+    position: absolute;
+    background-color: white;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 40px;
+    color: black;
+    border-radius: 10px;
+    flex-wrap: wrap;
+    padding: 10px 10px;
+  }
+  .add-to-cart {
+    opacity: 1;
+  }
+  .popup-messenger > img {
+    margin-left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+  .check-mark-icon {
+    margin-left: 15px;
+    margin-right: 15px;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid transparent;
+    position: relative;
+    transform: rotate(-45deg);
+  }
+  .circle-left {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .circle-left-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+  .circle-left-rotate.show {
+    animation: rotate-circle 0.1s 0.4s linear forwards;
+  }
+  .circle-right {
+    width: 28px;
+    height: 56px;
+    position: absolute;
+    top: -3px;
+    left: 24px;
+    overflow: hidden;
+    z-index: 1;
+  }
+  .circle-right-rotate {
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+    border: 3px solid rgb(140, 233, 0);
+    clip-path: polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+  .circle-right-rotate.show {
+    animation: rotate-circle 0.1s 0.3s linear forwards;
+  }
+  @keyframes rotate-circle {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(180deg);
+    }
+  }
+  .check-mark-line-1 {
+    height: 15px;
+    width: 3px;
+    background-color: transparent;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+  .check-mark-line-1 span {
+    display: block;
+    width: 3px;
+    height: 0;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-1 span.show {
+    animation: line-1 0.1s 0.5s linear forwards;
+  }
+  .check-mark-line-2 {
+    height: 3px;
+    width: 25px;
+    background-color: transparent;
+    position: absolute;
+    top: 27px;
+    left: 17px;
+  }
+  .check-mark-line-2 span {
+    display: block;
+    width: 0;
+    height: 3px;
+    background-color: rgb(140, 233, 0);
+  }
+  .check-mark-line-2 span.show {
+    animation: line-2 0.1s 0.6s linear forwards;
+  }
+  @keyframes line-1 {
+    0% {
+      height: 0;
+    }
+    100% {
+      height: 15px;
+    }
+  }
+  @keyframes line-2 {
+    0% {
+      width: 0;
+    }
+    100% {
+      width: 25px;
+    }
+  }
+  .container {
+    margin-top: 94px;
+    width: 100%;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .navigation {
+    width: 95%;
+    margin: 20px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+  }
+  .navigation > a {
+    text-decoration: none;
+    color: black;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .navigation > div {
+    display: inline;
+    color: #6c757d;
+    font-family: Roboto;
+  }
+  .modal-seat-map {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 10;
+  }
+  .seat-map-photo {
+    margin: 20vw auto;
+    width: 95vw;
+    overflow: auto;
+  }
+  .seat-map-photo > img {
+    width: 100%;
+  }
+  .close-icon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: 1vw;
+    right: 1vw;
+    opacity: 1;
+  }
+  .close-icon > img {
+    width: 100%;
+    height: 100%;
+  }
+  .show-title {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 10px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 35px;
+    color: #000000;
+    text-align: center;
+  }
+  .show-item {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+  }
+  .show-main-content {
+    width: 100%;
+  }
+  .show-detail {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .show-presentation {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .show-presentation :deep() .showpresentation-title {
+    width: 95%;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .show-presentation :deep() .line-break {
+    width: 100%;
+    height: 1px;
+    background-color: #c4c4c4;
+    display: none;
+  }
+  .show-presentation :deep() .show-presentation-photo {
+    width: 100%;
+    margin: 15px auto 15px auto;
+    /* height: 54vw; */
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  .show-presentation :deep() .article-paragraph-normal {
+    width: 100%;
+    margin: 10px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .show-presentation :deep() .end-paragraph {
+    margin-bottom: 20px;
+  }
+  .photo-note {
+    width: 95%;
+    margin: 0 auto;
+  }
+  .photo-note > p:nth-child(1) {
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    text-align: center;
+    color: #000000;
+  }
+  .photo-note > p:nth-child(2) {
+    font-family: Roboto;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+  }
+  .price {
+    font-weight: bold;
+  }
+  .order-ticket-part {
+    margin: 0px auto 0 auto;
+    width: 100%;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #c4c4c4;
+  }
+  .title-ticket-part {
+    margin: 10px auto;
+    width: 90%;
+    height: 60px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    display: none;
+  }
+  .show-information {
+    width: 100%;
+  }
+  .show-information-part-1 {
+    margin-left: 0%;
+  }
+  .show-information-part-2 {
+    margin-left: 0%;
+  }
+  .show-time {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-time > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-time > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-date {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-date > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-location {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-location > img {
+    width: 16px;
+    height: 16px;
+  }
+  .show-location > div {
+    height: 30px;
+    margin-left: 10px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 32px;
+    color: #000000;
+  }
+  .show-address {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .show-address > div {
+    height: 30px;
+    margin-left: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .ticket-class {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-class > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .ticket-class > select {
+    margin-left: 20px;
+    width: 185px;
+    height: 32px;
+    outline: none;
+    border-radius: 3px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    border: 1px solid #c4c4c4;
+  }
+  .ticket-class > select > option {
+    appearance: none;
+    padding-left: 5px;
+  }
+  .ticket-price {
+    width: 100%;
+    margin: 15px auto 0px auto;
+  }
+  .ticket-price > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .price-value {
+    margin-left: 10px;
+  }
+  .ticket-number {
+    width: 100%;
+    margin: 15px auto 0px auto;
+    display: flex;
+    align-items: center;
+  }
+  .ticket-number > label {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .minus-item {
+    margin-left: 15px;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px 0px 0px 3px;
+  }
+  .minus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .ticket-number > input {
+    width: 117px;
+    height: 34px;
+    box-sizing: border-box;
+    outline: none;
+    border-width: 1px 0 1px 0;
+    border-style: solid;
+    border-color: #c4c4c4;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .plus-item {
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    height: 34px;
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0px 3px 3px 0px;
+  }
+  .plus-item > img {
+    padding: 25%;
+    width: 75%;
+    height: 75%;
+  }
+  .add-to-cart-button {
+    width: 100%;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .add-to-cart-button:hover {
+    background-color: rgb(255, 0, 0);
+    cursor: pointer;
+  }
+  /*footer*/
+  .subscription-part {
+    display: none;
+  }
+  footer {
+    margin-top: 10px;
+  }
+}
+</style>

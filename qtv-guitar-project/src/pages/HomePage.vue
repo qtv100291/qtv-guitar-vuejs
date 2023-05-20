@@ -1,0 +1,5994 @@
+<template>
+  <main class="container">
+    <div class="about-store">
+      <div class="video-store-container">
+        <!-- <div class="overlay-video" v-if="!isLoadedVideo">
+          <img src="images/HomePage/Spin-0.7s-200px.gif" alt="loading-icon" />
+        </div> -->
+        <video
+          class="video-store"
+          muted
+          loop
+          @canplay="changeIsLoadedVideo"
+          ref="welcomeVideo"
+        >
+          <source src="shopvideo.mp4" type="video/mp4" />
+          Trình duyệt của bạn không hỗ trợ HTML5 Video.
+        </video>
+        <div class="audio-button" @click="playMusic">
+          <div
+            class="column column-1"
+            :class="{ 'playing-1': isPlayingMusic }"
+          ></div>
+          <div
+            class="column column-2"
+            :class="{ 'playing-2': isPlayingMusic }"
+          ></div>
+          <div
+            class="column column-3"
+            :class="{ 'playing-3': isPlayingMusic }"
+          ></div>
+          <div
+            class="column column-4"
+            :class="{ 'playing-4': isPlayingMusic }"
+          ></div>
+          <div
+            class="column column-5"
+            :class="{ 'playing-5': isPlayingMusic }"
+          ></div>
+          <div
+            class="column column-6"
+            :class="{ 'playing-6': isPlayingMusic }"
+          ></div>
+          <div class="tooltip">
+            <p
+              class="tooltip-title"
+              :class="{ 'active-tooltip': isPlayingMusic }"
+            >
+              Tắt Nhạc
+            </p>
+            <p
+              class="tooltip-title"
+              :class="{ 'active-tooltip': !isPlayingMusic }"
+            >
+              Bật Nhạc
+            </p>
+          </div>
+        </div>
+        <audio class="my-audio" loop ref="backgroundMusic">
+          <source src="welcomeshop.mp3" type="audio/mp3" />
+        </audio>
+        <div class="store-brief-description">
+          <div>
+            <p>GẦN 30 NĂM THÀNH LẬP</p>
+            <p>500+ SẢN PHẨM TRƯNG BÀY TẠI SHOWROM</p>
+          </div>
+          <router-link to="/blog/62f275ed5e5dd19a979dd77e"
+            >Thăm Quan Showroom</router-link
+          >
+        </div>
+      </div>
+    </div>
+    <div class="main-container">
+      <div class="part1-myproduct">
+        <div class="title-part1">SẢN PHẨM CỦA CHÚNG TÔI</div>
+        <div class="row-button">
+          <div class="hot-button-container">
+            <div
+              class="pagination hot-button"
+              :class="{ 'active-pagination': activeTab === 1 }"
+              @click="changeActiveTab(1)"
+            >
+              Nổi Bật
+            </div>
+          </div>
+          <div class="new-button-container">
+            <div
+              class="pagination new-button"
+              :class="{ 'active-pagination': activeTab !== 1 }"
+              @click="changeActiveTab(2)"
+            >
+              Sản Phẩm Mới
+            </div>
+          </div>
+        </div>
+        <div class="row1-part1">
+          <div
+            class="container-1"
+            :class="{ 'active-row': activeTab === 1 }"
+            :style="{
+              opacity: activeTab === 1 ? 1 : 0,
+              visibility: activeTab === 1 ? 'visible' : 'hidden',
+            }"
+          >
+            <guitar-card
+              v-for="guitar in guitarDataNewItemPart_1"
+              :key="guitar._id"
+              additional-class="new-item"
+              :front-image="guitar.photo_item.banner[0]"
+              :back-image="guitar.photo_item.banner[1]"
+              :price="guitar.price"
+              :guitar-type="guitar.group"
+              :guitar-name="guitar.name"
+              :guitar-id="guitar._id"
+            ></guitar-card>
+          </div>
+          <div
+            class="container-2"
+            :class="{ 'active-row': activeTab !== 1 }"
+            :style="{
+              opacity: activeTab !== 1 ? 1 : 0,
+              visibility: activeTab !== 1 ? 'visible' : 'hidden',
+            }"
+          >
+            <guitar-card
+              v-for="guitar in guitarDataNewItemPart_2"
+              :key="guitar._id"
+              additional-class="hot-item"
+              :front-image="guitar.photo_item.banner[0]"
+              :back-image="guitar.photo_item.banner[1]"
+              :price="guitar.price"
+              :guitar-type="guitar.group"
+              :guitar-name="guitar.name"
+              :guitar-id="guitar._id"
+            ></guitar-card>
+          </div>
+        </div>
+        <div class="row2-part1">
+          <div
+            class="container-1"
+            :class="{ 'active-row': activeTab === 1 }"
+            :style="{
+              opacity: activeTab === 1 ? 1 : 0,
+              visibility: activeTab === 1 ? 'visible' : 'hidden',
+            }"
+          >
+            <guitar-card
+              v-for="guitar in guitarDataHotItemPart_1"
+              :key="guitar._id"
+              additional-class="new-item"
+              :front-image="guitar.photo_item.banner[0]"
+              :back-image="guitar.photo_item.banner[1]"
+              :price="guitar.price"
+              :guitar-type="guitar.group"
+              :guitar-name="guitar.name"
+              :guitar-id="guitar._id"
+            ></guitar-card>
+          </div>
+          <div
+            class="container-2"
+            :class="{ 'active-row': activeTab !== 1 }"
+            :style="{
+              opacity: activeTab !== 1 ? 1 : 0,
+              visibility: activeTab !== 1 ? 'visible' : 'hidden',
+            }"
+          >
+            <guitar-card
+              v-for="guitar in guitarDataHotItemPart_2"
+              :key="guitar._id"
+              additional-class="hot-item"
+              :front-image="guitar.photo_item.banner[0]"
+              :back-image="guitar.photo_item.banner[1]"
+              :price="guitar.price"
+              :guitar-type="guitar.group"
+              :guitar-name="guitar.name"
+              :guitar-id="guitar._id"
+            ></guitar-card>
+          </div>
+        </div>
+      </div>
+      <div class="sub-banner">
+        <div class="sub-banner-overlay"></div>
+        <div class="text-sub-banner">
+          <div class="line1-text-sub-banner">Chào mừng ngày 8 tháng 3</div>
+          <div class="line2-text-sub-banner">Giảm Giá Đến 25%</div>
+          <div class="line3-text-sub-banner">
+            Cho các bạn nữ đến mua guitar tại QTV Guitar Shop
+          </div>
+        </div>
+      </div>
+      <div class="part2-guitar-show">
+        <div class="part2-title">GUITAR SHOW</div>
+        <div class="part2-presentation">
+          “... Không chỉ là địa chỉ hàng đầu trong việc cung cấp nhạc cụ, QTV
+          Guitar Shop còn là một trong các nhà phân phối vé chính thức của rất
+          nhiều chương trình biểu diễn Guitar quy mô lớn, với sự tham gia của
+          nhiều nghệ sĩ tên tuổi trong nước và quốc tế ...”
+        </div>
+        <router-link class="part2-seeAllButton" to="/guitar-show"
+          >Xem Tất Cả</router-link
+        >
+        <div class="part2-some-guitar-show">
+          <router-link
+            to="/guitar-show/630396936cc62e98fa159d27"
+            class="part2-guitar-show-item"
+            id="part2-item1"
+          >
+            <img
+              class="artist-photo"
+              src="images/HomePage/Tommy Emmanuel.jpg"
+              alt="Tommy Emmanuel"
+            />
+            <div class="part2-artist-name">Tommy Emmanuel</div>
+            <div class="overlay-show"></div>
+            <div class="show-presentation">
+              <div class="show-presentation-time">30 Tháng 4</div>
+              <div class="show-presentation-location">
+                Tại Nhà Hát Lớn Hà Nội
+              </div>
+              <div class="show-presentation-seeMore">Chi Tiết >></div>
+            </div>
+            <div class="show-presentation-mobile">
+              <div class="show-presentation-mobile-title">
+                Tommy Emmanuel Guitar Show In Vietnam
+              </div>
+              <div class="show-presentation-mobile-location">
+                Ngày 30 Tháng 4 Tại Nhà Hát Lớn Hà Nội
+              </div>
+            </div>
+          </router-link>
+          <router-link
+            to="/guitar-show/630396936cc62e98fa159d28"
+            class="part2-guitar-show-item"
+            id="part2-item2"
+          >
+            <img
+              class="artist-photo"
+              src="images/HomePage/SungHaJung.jpg"
+              alt="Sung Ha Jung"
+            />
+            <div class="part2-artist-name">Sung Ha Jung</div>
+            <div class="overlay-show"></div>
+            <div class="show-presentation">
+              <div class="show-presentation-time">10 Tháng 5</div>
+              <div class="show-presentation-location">
+                Tại Nhà Hát Star Galaxy
+              </div>
+              <div class="show-presentation-seeMore">Chi Tiết >></div>
+            </div>
+            <div class="show-presentation-mobile">
+              <div class="show-presentation-mobile-title">
+                SungHa Jung Guitar Show In Vietnam
+              </div>
+              <div class="show-presentation-mobile-location">
+                Ngày 10 Tháng 5 Tại Nhà Hát Star Galaxy
+              </div>
+            </div>
+          </router-link>
+          <router-link
+            to="/guitar-show/630396936cc62e98fa159d29"
+            class="part2-guitar-show-item"
+            id="part2-item3"
+          >
+            <img
+              class="artist-photo"
+              src="images/HomePage/Le Thu.jpg"
+              alt="Lê Thu"
+            />
+            <div class="part2-artist-name">Lê Thu</div>
+            <div class="overlay-show"></div>
+            <div class="show-presentation">
+              <div class="show-presentation-time">15 Tháng 5</div>
+              <div class="show-presentation-location">Tại Dolphin Plaza</div>
+              <div class="show-presentation-seeMore">Chi Tiết >></div>
+            </div>
+            <div class="show-presentation-mobile">
+              <div class="show-presentation-mobile-title">Lê Thu Concert</div>
+              <div class="show-presentation-mobile-location">
+                Ngày 15 Tháng 5 Tại Dolphin Plaza
+              </div>
+            </div>
+          </router-link>
+        </div>
+        <div class="quote-part2">
+          <div class="quote-item">
+            <div class="quote-item-photo">
+              <img src="images/HomePage/Jimi Hendrix.jpg" alt="Jimi Hendrix" />
+            </div>
+            <div class="quote-item-name">Jimi Hendrix</div>
+            <div class="quote-item-job">Nghệ sĩ Guitar</div>
+            <div class="line-fence">
+              <div class="line-fence-top"></div>
+              <div class="line-fence-center">
+                <img src="images/HomePage/linefence.png" alt="line-fence" />
+              </div>
+              <div class="line-fence-bottom"></div>
+            </div>
+            <div class="quote-item-eng">
+              “ Music doesn’t lie. If there is something to be changed in this
+              world, then it can only happen through music. ”
+            </div>
+            <div class="quote-item-viet">
+              “ Âm nhạc không nói dối. Nếu có thứ gì đó được thay đổi trên thế
+              giới này, thì điều đó chỉ có thể xảy ra bởi âm nhạc. ”
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Part3-Blog-->
+      <div class="part3-blog">
+        <div class="part3-title">BLOG</div>
+        <div class="blog-slide">
+          <div class="blog-slide-prev"><i class="fas fa-chevron-left"></i></div>
+          <div class="blog-slide-next">
+            <i class="fas fa-chevron-right"></i>
+          </div>
+          <div class="blog-slide-container">
+            <div class="blog-slide-inner">
+              <div class="blog-slide-content">
+                <router-link
+                  class="blog-item first-child"
+                  to="/blog/62f275ed5e5dd19a979dd77e"
+                >
+                  <div class="blog-item-photo">
+                    <img
+                      src="images/HomePage/qtv_shop_homepage.jpg"
+                      alt="qtv guitar shop"
+                    />
+                  </div>
+                  <div class="blog-item-info">
+                    <div class="blog-item-date">
+                      <img src="images/HomePage/calendar 1.png" alt="lịch" />
+                      <div>10 Tháng 02, 2020</div>
+                    </div>
+                    <div class="blog-item-author">
+                      <img src="images/HomePage/pen 1.png" alt="tác giả" />
+                      <div>Admin</div>
+                    </div>
+                  </div>
+                  <div
+                    class="blog-item-title"
+                    title="Giới Thiệu Showroom QTV Guitar Shop"
+                  >
+                    Giới Thiệu Showroom QTV Guitar Shop
+                  </div>
+                  <div class="blog-item-summary">
+                    Thành lập từ năm 1991 bới những cựu du học sinh Pháp yêu
+                    thích Guitar, với mong muốn lan tỏa niềm đam mê với cây đàn
+                    guitar ...
+                  </div>
+                  <div class="blog-item-seeMore">Chi Tiết >></div>
+                </router-link>
+                <router-link
+                  class="blog-item"
+                  to="/blog/62f275ed5e5dd19a979dd779"
+                >
+                  <div class="blog-item-photo">
+                    <img src="images/HomePage/keith-richards.jpg" alt="" />
+                  </div>
+                  <div class="blog-item-info">
+                    <div class="blog-item-date">
+                      <img src="images/HomePage/calendar 1.png" alt="lịch" />
+                      <div>29 Tháng 04, 2020</div>
+                    </div>
+                    <div class="blog-item-author">
+                      <img src="images/HomePage/pen 1.png" alt="tác giả" />
+                      <div>Admin</div>
+                    </div>
+                  </div>
+                  <div
+                    class="blog-item-title"
+                    title="7 Câu Nói Truyền Cảm Hứng Từ Các Nghệ Sĩ Guitar Nổi Tiếng"
+                  >
+                    7 Câu Nói Truyền Cảm Hứng Từ Các Nghệ Sĩ Guitar Nổi Tiếng
+                  </div>
+                  <div class="blog-item-summary">
+                    Rất nhiều người trong số họ đã từ giã cõi đời từ rất sớm,
+                    nhưng lúc sinh thời, họ đã để lại cho chúng ta những điều
+                    tuyệt vời ....
+                  </div>
+                  <div class="blog-item-seeMore">Chi Tiết >></div>
+                </router-link>
+                <router-link
+                  class="blog-item"
+                  to="/blog/62f275ed5e5dd19a979dd77a"
+                >
+                  <div class="blog-item-photo">
+                    <img src="images/HomePage/fenderGuitar.jpg" alt="" />
+                  </div>
+                  <div class="blog-item-info">
+                    <div class="blog-item-date">
+                      <img src="images/HomePage/calendar 1.png" alt="lịch" />
+                      <div>20 Tháng 04, 2020</div>
+                    </div>
+                    <div class="blog-item-author">
+                      <img src="images/HomePage/pen 1.png" alt="tác giả" />
+                      <div>Admin</div>
+                    </div>
+                  </div>
+                  <div
+                    class="blog-item-title"
+                    title="Một Vài Mẫu Guitar Điện Và Acoustic Mới Năm Nay (Phần 1)"
+                  >
+                    Một Vài Mẫu Guitar Điện Và Acoustic Mới Năm Nay...
+                  </div>
+                  <div class="blog-item-summary">
+                    QTV Guitar Shop xin giới thiệu với các bạn một vài mẫu
+                    Guitar Điện và Acoustic mới xuất hiện vào tháng 4 năm 2020
+                    ....
+                  </div>
+                  <div class="blog-item-seeMore">Chi Tiết >></div>
+                </router-link>
+                <router-link
+                  class="blog-item"
+                  to="/blog/62f275ed5e5dd19a979dd77b"
+                >
+                  <div class="blog-item-photo">
+                    <img
+                      src="images/HomePage/pexels-photo-1407322.jpeg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="blog-item-info">
+                    <div class="blog-item-date">
+                      <img src="images/HomePage/calendar 1.png" alt="lịch" />
+                      <div>31 Tháng 03, 2020</div>
+                    </div>
+                    <div class="blog-item-author">
+                      <img src="images/HomePage/pen 1.png" alt="tác giả" />
+                      <div>Admin</div>
+                    </div>
+                  </div>
+                  <div
+                    class="blog-item-title"
+                    title="Một Vài Lời Khuyên Và Mẹo Giúp Cho Các Bạn Vừa Đánh Đàn Vừa Hát Tốt Hơn"
+                  >
+                    Một Vài Lời Khuyên Và Mẹo Giúp Cho Các Bạn Vừa ...
+                  </div>
+                  <div class="blog-item-summary">
+                    Đây là hướng dẫn từng bước dành cho các bạn mới học Guitar
+                    đệm hát để kết hợp giữa chơi đàn và giọng hát ...
+                  </div>
+                  <div class="blog-item-seeMore">Chi Tiết >></div>
+                </router-link>
+                <router-link
+                  class="blog-item"
+                  to="/blog/62f275ed5e5dd19a979dd77c"
+                >
+                  <div class="blog-item-photo">
+                    <img
+                      src="images/HomePage/fenderultra - homepage.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="blog-item-info">
+                    <div class="blog-item-date">
+                      <img src="images/HomePage/calendar 1.png" alt="lịch" />
+                      <div>12 Tháng 03, 2020</div>
+                    </div>
+                    <div class="blog-item-author">
+                      <img src="images/HomePage/pen 1.png" alt="tác giả" />
+                      <div>Admin</div>
+                    </div>
+                  </div>
+                  <div
+                    class="blog-item-title"
+                    title="Phim Tài Liệu : Cách Tạo Ra Một Chiếc Guitar Fender American Ultra Series"
+                  >
+                    Cách Tạo Ra Một Chiếc Guitar Fender American Ultra Series
+                  </div>
+                  <div class="blog-item-summary">
+                    American Ultra là một trong những dòng sản phẩm cao cấp nhất
+                    của Fender, đã giúp Fender gây dựng vị thế ...
+                  </div>
+                  <div class="blog-item-seeMore">Chi Tiết >></div>
+                </router-link>
+                <a
+                  class="blog-item last-child"
+                  to="/blog/62f275ed5e5dd19a979dd77d"
+                >
+                  <div class="blog-item-photo">
+                    <img
+                      src="images/HomePage/thelasttrain - homepage.jpg"
+                      alt="The last train"
+                    />
+                  </div>
+                  <div class="blog-item-info">
+                    <div class="blog-item-date">
+                      <img src="images/HomePage/calendar 1.png" alt="lịch" />
+                      <div>25 Tháng 02, 2020</div>
+                    </div>
+                    <div class="blog-item-author">
+                      <img src="images/HomePage/pen 1.png" alt="tác giả" />
+                      <div>Admin</div>
+                    </div>
+                  </div>
+                  <div
+                    class="blog-item-title"
+                    title="David Knopfler Giới Thiệu Album Mới – “Last Train Leaving”"
+                  >
+                    David Knopfler Giới Thiệu Album Mới – Last Train ...
+                  </div>
+                  <div class="blog-item-summary">
+                    “Last Train Leaving” - Album mới ra mắt của nghệ sĩ guitar
+                    và ca sĩ gạo cội David Knopfler với 14 tác phẩm mang âm
+                    hưởng ballad ...
+                  </div>
+                  <div class="blog-item-seeMore">Chi Tiết >></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</template>
+
+<script>
+import { onBeforeMount, onMounted, ref, watch } from "vue";
+import { getGuitarData } from "../api/guitar";
+import GuitarCard from "../components/common/GuitarCard.vue";
+
+export default {
+  components: {
+    GuitarCard,
+  },
+  setup() {
+    const guitarDataNewItemPart_1 = ref([]);
+    const guitarDataNewItemPart_2 = ref([]);
+    const guitarDataHotItemPart_1 = ref([]);
+    const guitarDataHotItemPart_2 = ref([]);
+    const activeTab = ref(1);
+    const isLoadedVideo = ref(false);
+    const isPlayingMusic = ref(false);
+    const welcomeVideo = ref(null);
+    const backgroundMusic = ref(null);
+    // const scrollPosition = ref(0);
+
+    function changeIsLoadedVideo() {
+      isLoadedVideo.value = !isLoadedVideo.value;
+    }
+    watch(isLoadedVideo, (now) => {
+      if (now) welcomeVideo.value.play();
+    });
+    watch(isPlayingMusic, (isPlaying) => {
+      if (isPlaying) backgroundMusic.value.play();
+      else backgroundMusic.value.pause();
+    });
+    onMounted(async () => {
+      window.addEventListener("scroll", runAnimation);
+
+      const guitarIdList = [
+        "classicalguitar/627fb6c4b8d71c61866271a4",
+        "acousticguitar/627fb6b6b8d71c618662717a",
+        "ukulele/627fb6ddb8d71c61866271cf",
+        "electricguitar/627fb6d3b8d71c61866271bf",
+        "classicalguitar/627fb6c4b8d71c618662719b",
+        "electricguitar/627fb6d3b8d71c61866271c2",
+        "acousticguitar/627fb6b6b8d71c6186627176",
+        "ukulele/627fb6ddb8d71c61866271d3",
+        "electricguitar/627fb6d3b8d71c61866271af",
+        "classicalguitar/627fb6c4b8d71c6186627194",
+        "acousticguitar/627fb6b6b8d71c6186627174",
+        "ukulele/627fb6ddb8d71c61866271d8",
+        "acousticguitar/627fb6b6b8d71c618662717d",
+        "ukulele/627fb6ddb8d71c61866271c8",
+        "classicalguitar/627fb6c4b8d71c618662719e",
+        "electricguitar/627fb6d3b8d71c61866271b7",
+      ];
+      const guitarData = await getGuitarData(guitarIdList);
+      guitarData.forEach((item, index) => {
+        switch (true) {
+          case index < 4:
+            guitarDataNewItemPart_1.value.push(item);
+            break;
+          case index < 8:
+            guitarDataNewItemPart_2.value.push(item);
+            break;
+          case index < 12:
+            guitarDataHotItemPart_1.value.push(item);
+            break;
+          default:
+            guitarDataHotItemPart_2.value.push(item);
+        }
+      });
+    });
+    onBeforeMount(() => {
+      window.removeEventListener("scroll", runAnimation);
+    });
+    function playMusic() {
+      isPlayingMusic.value = !isPlayingMusic.value;
+    }
+    function changeActiveTab(activeTabValue) {
+      activeTab.value = activeTabValue;
+    }
+    function runAnimation() {
+      subBannerMove();
+      myProductAnimation();
+      guitarShowAnimation();
+    }
+    function subBannerMove() {
+      if (window.innerWidth < 1023) return;
+      let windowHeight = window.innerHeight;
+      let subBannerHeight = document.querySelector(".sub-banner").offsetHeight;
+      if (
+        document.querySelector(".sub-banner").getBoundingClientRect().bottom <
+          windowHeight &&
+        document.querySelector(".sub-banner").getBoundingClientRect().bottom >
+          subBannerHeight
+      ) {
+        var x =
+          windowHeight -
+          document.querySelector(".sub-banner").getBoundingClientRect().bottom;
+        var y = (42 * x) / (windowHeight - subBannerHeight);
+      }
+      if (document.body.innerWidth > 1366) {
+        document.querySelector(".sub-banner").style.backgroundPosition = `50% ${
+          100 - y
+        }%`;
+      } else
+        document.querySelector(".sub-banner").style.backgroundPosition = `50% ${
+          100 - y
+        }%`;
+    }
+
+    function myProductAnimation() {
+      let windowHeight = window.innerHeight;
+      let heightItem = document.querySelector(".item").clientHeight;
+      if (
+        document.querySelector(".row1-part1").getBoundingClientRect().top <
+        windowHeight - heightItem
+      ) {
+        document.querySelector(".row1-part1").classList.add("loaded");
+      }
+      if (
+        document.querySelector(".row2-part1").getBoundingClientRect().top <
+        windowHeight - heightItem
+      ) {
+        document.querySelector(".row2-part1").classList.add("loaded");
+      }
+    }
+
+    function guitarShowAnimation() {
+      let windowHeight = window.innerHeight;
+      let heightItem = document.querySelector(
+        ".part2-guitar-show-item"
+      ).clientHeight;
+      if (
+        document.querySelector("#part2-item2").getBoundingClientRect().top <
+        windowHeight - heightItem
+      ) {
+        document
+          .querySelector("#part2-item1")
+          .classList.add("loaded-guitar-show");
+        setTimeout(function () {
+          document
+            .querySelector("#part2-item2")
+            .classList.add("loaded-guitar-show");
+        }, 600);
+        setTimeout(function () {
+          document
+            .querySelector("#part2-item3")
+            .classList.add("loaded-guitar-show");
+        }, 1200);
+      }
+    }
+    return {
+      welcomeVideo,
+      isLoadedVideo,
+      changeIsLoadedVideo,
+      isPlayingMusic,
+      backgroundMusic,
+      guitarDataNewItemPart_1,
+      guitarDataNewItemPart_2,
+      guitarDataHotItemPart_1,
+      guitarDataHotItemPart_2,
+      playMusic,
+      activeTab,
+      changeActiveTab,
+    };
+  },
+};
+</script>
+
+<style scoped>
+@media only screen and (min-width: 1366px) {
+  /*Main*/
+  .container {
+    width: 100%;
+    position: relative;
+    margin-top: 62px;
+  }
+  .container.scroll {
+    margin-top: 124px;
+  }
+  .main-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .about-store {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .video-store-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    z-index: 0;
+  }
+  .video-store-container::after {
+    content: "";
+    width: 100%;
+    background-image: url(/public/images/HomePage/bg.svg);
+    position: absolute;
+    height: 15px;
+    top: calc(100% - 15px);
+    left: 0;
+    z-index: 2;
+  }
+  .overlay-video {
+    position: absolute;
+    z-index: 1;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+  }
+  .overlay-video > img {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .video-store {
+    width: 100%;
+    position: relative;
+    top: -250px;
+  }
+  .my-audio {
+    position: absolute;
+    z-index: 2;
+    bottom: 5%;
+    left: 1%;
+  }
+  .audio-button {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    top: 5%;
+    right: 5%;
+    justify-content: space-between;
+    width: 28px;
+    height: 18px;
+  }
+  .audio-button:hover {
+    cursor: pointer;
+  }
+  .audio-button:hover .column {
+    background-color: red;
+  }
+  .column {
+    width: 3px;
+    height: 9px;
+    background-color: white;
+    transition: 0.5s;
+    position: absolute;
+    bottom: 0;
+  }
+  .column-1 {
+    left: 0;
+  }
+  .column-2 {
+    left: 5px;
+  }
+  .column-3 {
+    left: 10px;
+  }
+  .column-4 {
+    left: 15px;
+  }
+  .column-5 {
+    left: 20px;
+  }
+  .column-6 {
+    left: 25px;
+  }
+  .playing-1 {
+    animation: playing 0.5s infinite;
+  }
+  .playing-2 {
+    animation: playing 0.69s infinite;
+  }
+  .playing-3 {
+    animation: playing 0.57s infinite;
+  }
+  .playing-4 {
+    animation: playing 0.52s infinite;
+  }
+  .playing-5 {
+    animation: playing 0.65s infinite;
+  }
+  .playing-6 {
+    animation: playing 0.45s infinite;
+  }
+  @keyframes playing {
+    0% {
+      height: 9px;
+    }
+    50% {
+      height: 18px;
+    }
+    100% {
+      height: 9px;
+    }
+  }
+  .tooltip {
+    position: absolute;
+    top: -2px;
+    left: -80px;
+    width: 70px;
+    height: 25px;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
+  }
+  .tooltip-title {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 25px;
+  }
+  .active-tooltip {
+    opacity: 1;
+  }
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(0, 0, 0, 0.7);
+  }
+  .store-brief-description {
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 4%;
+    transform: translateX(-50%);
+    display: flex;
+  }
+  .store-brief-description > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 50px;
+    color: white;
+  }
+  .store-brief-description > a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid white;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    color: white;
+    border-radius: 30px;
+  }
+  .store-brief-description > a:hover {
+    cursor: pointer;
+    color: red;
+  }
+  .part1-myproduct {
+    width: 100%;
+    overflow: visible;
+  }
+  .title-part1 {
+    margin: 40px auto 0px auto;
+    width: 700px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+  }
+  .row-button {
+    width: 100%;
+    margin: 40px auto 0px auto;
+    display: flex;
+    justify-content: center;
+  }
+  .hot-button-container,
+  .new-button-container {
+    width: 50%;
+  }
+  .hot-button {
+    margin: 0px 25px 0px auto;
+    width: 150px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .hot-button:hover {
+    cursor: pointer;
+  }
+  .new-button {
+    margin: 0px auto 0 25px;
+    width: 180px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .new-button:hover {
+    cursor: pointer;
+  }
+  .active-pagination {
+    color: white;
+    background-color: var(--button-color);
+  }
+  .row1-part1 {
+    width: 100%;
+    margin: 60px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    opacity: 0;
+    position: relative;
+    transform: translateX(50px);
+    transition: 1s;
+  }
+  .row1-part1.loaded {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  .row2-part1 {
+    width: 100%;
+    margin: 30px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    opacity: 0;
+    position: relative;
+    transform: translateX(-50px);
+    transition: 1s;
+  }
+  .row2-part1.loaded {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  .container-1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    position: relative;
+    overflow: visible;
+    visibility: visible;
+  }
+  .container-2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    visibility: hidden;
+  }
+  /*Common Part: Item */
+  .item {
+    width: 275px;
+    height: 415px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+  }
+  .item:hover {
+    box-shadow: 0 0 10px rgb(49, 49, 49);
+  }
+  .item:hover .back-image {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .item-image {
+    width: 250px;
+    height: 250px;
+    margin: 12.5px auto 0px auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .front-image {
+    height: 100%;
+    opacity: 1;
+    background-color: white;
+  }
+  .back-image {
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    transform: rotateY(90deg);
+    z-index: 2;
+    opacity: 0;
+    background-color: white;
+    transition: 0.6s;
+  }
+  .item-name {
+    margin: 25.5px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 25px;
+  }
+  .item-name:hover {
+    color: orangered;
+  }
+  .price-before-reduction {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price-after-reduction {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 25px;
+    color: var(--text-price-color);
+  }
+  .line-item {
+    margin: 15px auto 0px auto;
+    width: 85px;
+    height: 0px;
+    border: 0.5px dashed #000000;
+  }
+  .detail-item {
+    margin: 5px auto 0px auto;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+  }
+  .detail-item:hover {
+    color: orangered;
+  }
+  /*sub-banner*/
+  .sub-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: 30px;
+    overflow: hidden;
+    margin: 60px auto 0px auto;
+    background-image: url(/public/images/HomePage/Red-rose-guitar_resize.jpg);
+    background-position: 50% 100%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+  }
+  .text-sub-banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .line1-text-sub-banner {
+    position: absolute;
+    width: 310px;
+    height: 30px;
+    left: 748px;
+    top: 68px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+  .line2-text-sub-banner {
+    position: absolute;
+    width: 459px;
+    height: 60px;
+    left: 659px;
+    top: 110px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    width: 568px;
+    height: 30px;
+    left: 632px;
+    top: 188px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    width: 568px;
+    height: 30px;
+    left: 625px;
+    top: 188px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+  }
+  /*Part 2 Guitar Show*/
+  .part2-guitar-show {
+    position: relative;
+    width: 100%;
+    margin-top: 60px;
+  }
+  .part2-title {
+    width: 500px;
+    height: 60px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .part2-presentation {
+    margin: 20px auto 0 auto;
+    width: 900px;
+    height: 60px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .part2-seeAllButton {
+    text-decoration: none;
+    width: 150px;
+    height: 45px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    box-sizing: border-box;
+    border-radius: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+  }
+  .part2-seeAllButton:hover {
+    background-color: red;
+  }
+  .part2-some-guitar-show {
+    margin-top: 50px;
+    width: 100%;
+    height: 595px;
+    position: relative;
+  }
+  /*Common Part Guitar Show Item*/
+  .part2-guitar-show-item {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 540px;
+    height: 320px;
+    position: absolute;
+    border: 7px solid #bdb4b4;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: 0.5s;
+  }
+  .part2-guitar-show-item:hover .overlay-show {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  .part2-guitar-show-item:hover .part2-artist-name {
+    opacity: 0.3;
+  }
+  .artist-photo {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .part2-artist-name {
+    position: absolute;
+    height: 50px;
+    width: 270px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .overlay-show {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 0.5s;
+  }
+  .show-presentation {
+    position: absolute;
+    width: 270px;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .show-presentation-time {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore {
+    margin: 30px auto 0px auto;
+    width: 100px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore:hover {
+    color: orangered;
+  }
+  /* Part2-item1*/
+  #part2-item1 {
+    z-index: 2;
+    left: 112px;
+    top: 168px;
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  #part2-item1:hover.loaded-guitar-show {
+    transform: scale(1.1);
+    z-index: 4;
+  }
+  #part2-item1.loaded-guitar-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  #part2-item1 .part2-artist-name {
+    left: 250px;
+    top: 110px;
+  }
+
+  #part2-item1 .show-presentation {
+    left: 550px;
+    top: 100px;
+  }
+  #part2-item1:hover .part2-artist-name {
+    left: 250px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item1:hover .show-presentation {
+    left: 250px;
+    top: 100px;
+  }
+  /*Part2-item2*/
+  #part2-item2 {
+    z-index: 1;
+    left: 397px;
+    top: 0px;
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  #part2-item2.loaded-guitar-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  #part2-item2:hover.loaded-guitar-show {
+    transform: scale(1.1);
+    z-index: 4;
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 80px;
+  }
+
+  #part2-item2 .show-presentation {
+    left: -280px;
+    top: 100px;
+  }
+  #part2-item2:hover .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item2:hover .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Part2-item3*/
+  #part2-item3 {
+    z-index: 0;
+    left: 524px;
+    top: 275px;
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  #part2-item3.loaded-guitar-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  #part2-item3:hover.loaded-guitar-show {
+    transform: scale(1.1);
+    z-index: 4;
+  }
+  #part2-item3 .part2-artist-name {
+    left: 0px;
+    top: 225px;
+  }
+  #part2-item3 .show-presentation {
+    left: -280px;
+    top: 100px;
+  }
+  #part2-item3:hover .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item3:hover .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Quote*/
+  .quote-part2 {
+    width: 1000px;
+    margin: 70px auto 0px auto;
+    height: 200px;
+    border: 5px solid #e1e1e1;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .quote-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .quote-item-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+    position: absolute;
+    top: 45px;
+    left: 50px;
+  }
+  .quote-item-photo img {
+    width: 100%;
+    height: 100%;
+  }
+  .quote-item-name {
+    position: absolute;
+    left: 169px;
+    top: 65px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .quote-item-job {
+    position: absolute;
+    left: 169px;
+    top: 95px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .line-fence {
+    position: absolute;
+    left: 340px;
+    top: 20px;
+    width: 40px;
+    height: 150px;
+  }
+  .line-fence-top {
+    width: 1px;
+    height: 55px;
+    margin: 0 auto;
+    background-color: #dadada;
+  }
+  .line-fence-center {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #dadada;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .line-fence-center img {
+    width: 25px;
+    height: 25px;
+  }
+  .line-fence-bottom {
+    width: 1px;
+    height: 55px;
+    margin: 0 auto;
+    background-color: #dadada;
+  }
+  .quote-item-eng {
+    width: 550px;
+    height: 50px;
+    position: absolute;
+    top: 40px;
+    left: 410px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .quote-item-viet {
+    width: 550px;
+    height: 50px;
+    position: absolute;
+    top: 95px;
+    left: 410px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  /*Part3 Blog*/
+  .part3-blog {
+    position: relative;
+    width: 100%;
+    margin-top: 60px;
+  }
+  .part3-title {
+    width: 700px;
+    height: 60px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .blog-slide-prev {
+    position: absolute;
+    left: 0px;
+    top: 210px;
+    opacity: 0;
+    font-size: 35px;
+    transition: 1s;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+  }
+  .blog-slide-prev > i {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide-next {
+    position: absolute;
+    right: 0px;
+    top: 210px;
+    opacity: 0;
+    font-size: 35px;
+    transition: 1s;
+    cursor: pointer;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    width: 50px;
+    height: 50px;
+    border-radius: 999px;
+  }
+  .blog-slide-next > i {
+    position: absolute;
+    top: 45%;
+    left: 55%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide:hover .blog-slide-prev {
+    opacity: 1;
+  }
+  .blog-slide:hover .blog-slide-next {
+    opacity: 1;
+  }
+  .blog-slide {
+    width: 100%;
+    margin-top: 25px;
+    position: relative;
+  }
+  .blog-slide-container {
+    width: 1050px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .blog-slide-inner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 470px;
+    transition: 1s;
+  }
+  .blog-slide-content {
+    position: absolute;
+    left: -362.5px;
+    top: 0;
+    display: flex;
+    transition: 0.5s;
+  }
+  @keyframes move-right {
+    0% {
+      left: -725px;
+    }
+    100% {
+      left: -362.5px;
+    }
+  }
+  @keyframes move-left {
+    0% {
+      left: 0px;
+    }
+    100% {
+      left: -362.5px;
+    }
+  }
+  .blog-item {
+    margin-right: 37.5px;
+    width: 325px;
+    height: 470px;
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+  }
+  .blog-item-photo {
+    width: 325px;
+    height: 250px;
+  }
+  .blog-item-photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .blog-item-info {
+    width: 285px;
+    margin: 16px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-item-date {
+    width: 143px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .blog-item-date > div {
+    width: 120px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-author {
+    width: 63px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-author > img {
+    width: 15px;
+    height: 15px;
+  }
+  .blog-item-author > div {
+    width: 44px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-title {
+    width: 285px;
+    height: 60px;
+    margin: 6px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 26px;
+    color: #000000;
+  }
+  .blog-item-summary {
+    width: 285px;
+    height: 60px;
+    margin: 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .blog-item-seeMore {
+    width: 80px;
+    height: 20px;
+    margin: 10px 20px 0px auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    color: #32323d;
+  }
+  .blog-item-seeMore:hover {
+    color: orangered;
+  }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1365px) {
+  /*Main*/
+  .container {
+    width: 100%;
+    position: relative;
+    margin-top: 62px;
+  }
+  .container.scroll {
+    margin-top: 124px;
+  }
+  .main-container {
+    width: 1000px;
+    margin: 0 auto;
+  }
+  .about-store {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .video-store-container {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    overflow: hidden;
+    margin: 0 auto;
+    position: relative;
+    z-index: 0;
+  }
+  .video-store-container::after {
+    content: "";
+    width: 100%;
+    background-image: url(/public/images/HomePage/bg.svg);
+    position: absolute;
+    height: 15px;
+    top: calc(100% - 15px);
+    left: 0;
+    z-index: 2;
+  }
+  .overlay-video {
+    position: absolute;
+    z-index: 1;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+  }
+  .overlay-video > img {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .video-store {
+    width: 100%;
+    position: relative;
+    top: -250px;
+  }
+  .my-audio {
+    position: absolute;
+    z-index: 2;
+    bottom: 5%;
+    left: 1%;
+  }
+  .audio-button {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    top: 5%;
+    right: 5%;
+    justify-content: space-between;
+    width: 28px;
+    height: 18px;
+  }
+  .audio-button:hover {
+    cursor: pointer;
+  }
+  .audio-button:hover .column {
+    background-color: red;
+  }
+  .column {
+    width: 3px;
+    height: 9px;
+    background-color: white;
+    transition: 0.5s;
+    position: absolute;
+    bottom: 0;
+  }
+  .column-1 {
+    left: 0;
+  }
+  .column-2 {
+    left: 5px;
+  }
+  .column-3 {
+    left: 10px;
+  }
+  .column-4 {
+    left: 15px;
+  }
+  .column-5 {
+    left: 20px;
+  }
+  .column-6 {
+    left: 25px;
+  }
+  .playing-1 {
+    animation: playing 0.5s infinite;
+  }
+  .playing-2 {
+    animation: playing 0.69s infinite;
+  }
+  .playing-3 {
+    animation: playing 0.57s infinite;
+  }
+  .playing-4 {
+    animation: playing 0.52s infinite;
+  }
+  .playing-5 {
+    animation: playing 0.65s infinite;
+  }
+  .playing-6 {
+    animation: playing 0.45s infinite;
+  }
+  @keyframes playing {
+    0% {
+      height: 9px;
+    }
+    50% {
+      height: 18px;
+    }
+    100% {
+      height: 9px;
+    }
+  }
+  .tooltip {
+    position: absolute;
+    top: -2px;
+    left: -80px;
+    width: 70px;
+    height: 25px;
+    color: white;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 7px;
+  }
+  .tooltip-title {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 25px;
+  }
+  .active-tooltip {
+    opacity: 1;
+  }
+  .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(0, 0, 0, 0.7);
+  }
+  .store-brief-description {
+    width: 95%;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 4%;
+    transform: translateX(-50%);
+    display: flex;
+  }
+  .store-brief-description > div {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 40px;
+    color: white;
+  }
+  .store-brief-description > a {
+    text-decoration: none;
+    padding: 10px 10px;
+    border: 1px solid white;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 25px;
+    color: white;
+    border-radius: 30px;
+    width: 180px;
+    text-align: center;
+  }
+  .store-brief-description > a:hover {
+    cursor: pointer;
+    color: red;
+  }
+  .part1-myproduct {
+    width: 100%;
+    overflow: visible;
+  }
+  .title-part1 {
+    margin: 40px auto 0px auto;
+    width: 700px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 42px;
+    line-height: 50px;
+  }
+  .row-button {
+    width: 100%;
+    margin: 40px auto 0px auto;
+    display: flex;
+    justify-content: center;
+  }
+  .hot-button-container,
+  .new-button-container {
+    width: 50%;
+  }
+  .hot-button {
+    margin: 0px 25px 0px auto;
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .hot-button:hover {
+    cursor: pointer;
+  }
+  .new-button {
+    margin: 0px auto 0 25px;
+    width: 180px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .new-button:hover {
+    cursor: pointer;
+  }
+  .active-pagination {
+    color: white;
+    background-color: var(--button-color);
+  }
+  .row1-part1 {
+    width: 100%;
+    margin: 60px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    opacity: 0;
+    position: relative;
+    transform: translateX(50px);
+    transition: 1s;
+  }
+  .row1-part1.loaded {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  .row2-part1 {
+    width: 100%;
+    margin: 30px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    opacity: 0;
+    position: relative;
+    transform: translateX(-50px);
+    transition: 1s;
+  }
+  .row2-part1.loaded {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  .container-1 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    position: relative;
+    overflow: visible;
+    visibility: visible;
+  }
+  .container-2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: space-between;
+    overflow: visible;
+    visibility: hidden;
+  }
+  /*Common Part: Item */
+  .item {
+    width: 230px;
+    height: 375px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+  }
+  .item:hover {
+    box-shadow: 0 0 10px rgb(49, 49, 49);
+  }
+  .item:hover .back-image {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .item-image {
+    width: 215px;
+    height: 215px;
+    margin: 12.5px auto 0px auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .front-image {
+    height: 100%;
+    opacity: 1;
+    background-color: white;
+  }
+  .back-image {
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    transform: rotateY(90deg);
+    z-index: 2;
+    opacity: 0;
+    background-color: white;
+    transition: 0.6s;
+  }
+  .item-name {
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .item-name:hover {
+    color: orangered;
+  }
+  .price-before-reduction {
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price-after-reduction {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 22px;
+    color: var(--text-price-color);
+  }
+  .line-item {
+    margin: 15px auto 0px auto;
+    width: 85px;
+    height: 0px;
+    border: 0.5px dashed #000000;
+  }
+  .detail-item {
+    margin: 5px auto 0px auto;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+  }
+  .detail-item:hover {
+    color: orangered;
+  }
+  /*sub-banner*/
+  .sub-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    border-radius: 30px;
+    overflow: hidden;
+    margin: 60px auto 0px auto;
+    background-image: url(/public/images/HomePage/Red-rose-guitar_resize.jpg);
+    background-position: 80% 100%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+  }
+  .text-sub-banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .line1-text-sub-banner {
+    position: absolute;
+    width: 310px;
+    height: 30px;
+    left: 578px;
+    top: 68px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+  .line2-text-sub-banner {
+    position: absolute;
+    width: 459px;
+    height: 60px;
+    left: 469px;
+    top: 110px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 45px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    width: 568px;
+    height: 30px;
+    left: 472px;
+    top: 188px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+  }
+  /*Part 2 Guitar Show*/
+  .part2-guitar-show {
+    position: relative;
+    width: 100%;
+    margin-top: 60px;
+  }
+  .part2-title {
+    width: 500px;
+    height: 60px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 42px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .part2-presentation {
+    margin: 20px auto 0 auto;
+    width: 900px;
+    height: 60px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .part2-seeAllButton {
+    text-decoration: none;
+    width: 150px;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+  }
+  .part2-seeAllButton:hover {
+    background-color: red;
+  }
+  .part2-some-guitar-show {
+    margin-top: 50px;
+    width: 100%;
+    height: 595px;
+    position: relative;
+  }
+  /*Common Part Guitar Show Item*/
+  .part2-guitar-show-item {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 540px;
+    height: 320px;
+    position: absolute;
+    border: 7px solid #bdb4b4;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: 0.5s;
+  }
+  .part2-guitar-show-item:hover .overlay-show {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  .part2-guitar-show-item:hover .part2-artist-name {
+    opacity: 0.3;
+  }
+  .artist-photo {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .part2-artist-name {
+    position: absolute;
+    height: 50px;
+    width: 270px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .overlay-show {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0);
+    transition: all 0.5s;
+  }
+  .show-presentation {
+    position: absolute;
+    width: 270px;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .show-presentation-time {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore {
+    margin: 30px auto 0px auto;
+    width: 100px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore:hover {
+    color: orangered;
+  }
+  /* Part2-item1*/
+  #part2-item1 {
+    z-index: 2;
+    left: 30px;
+    top: 168px;
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  #part2-item1:hover.loaded-guitar-show {
+    transform: scale(1.1);
+    z-index: 4;
+  }
+  #part2-item1.loaded-guitar-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  #part2-item1 .part2-artist-name {
+    left: 250px;
+    top: 110px;
+  }
+
+  #part2-item1 .show-presentation {
+    left: 550px;
+    top: 100px;
+  }
+  #part2-item1:hover .part2-artist-name {
+    left: 250px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item1:hover .show-presentation {
+    left: 250px;
+    top: 100px;
+  }
+  /*Part2-item2*/
+  #part2-item2 {
+    z-index: 1;
+    left: 260px;
+    top: 0px;
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  #part2-item2.loaded-guitar-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  #part2-item2:hover.loaded-guitar-show {
+    transform: scale(1.1);
+    z-index: 4;
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 80px;
+  }
+
+  #part2-item2 .show-presentation {
+    left: -280px;
+    top: 100px;
+  }
+  #part2-item2:hover .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item2:hover .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Part2-item3*/
+  #part2-item3 {
+    z-index: 0;
+    right: 30px;
+    top: 275px;
+    opacity: 0;
+    transform: translateY(70px);
+  }
+  #part2-item3.loaded-guitar-show {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  #part2-item3:hover.loaded-guitar-show {
+    transform: scale(1.1);
+    z-index: 4;
+  }
+  #part2-item3 .part2-artist-name {
+    left: 0px;
+    top: 225px;
+  }
+  #part2-item3 .show-presentation {
+    left: -280px;
+    top: 100px;
+  }
+  #part2-item3:hover .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item3:hover .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Quote*/
+  .quote-part2 {
+    width: 1000px;
+    margin: 70px auto 0px auto;
+    height: 200px;
+    border: 5px solid #e1e1e1;
+    box-sizing: border-box;
+    position: relative;
+  }
+  .quote-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .quote-item-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    overflow: hidden;
+    position: absolute;
+    top: 45px;
+    left: 50px;
+  }
+  .quote-item-photo img {
+    width: 100%;
+    height: 100%;
+  }
+  .quote-item-name {
+    position: absolute;
+    left: 169px;
+    top: 65px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .quote-item-job {
+    position: absolute;
+    left: 169px;
+    top: 95px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .line-fence {
+    position: absolute;
+    left: 340px;
+    top: 20px;
+    width: 40px;
+    height: 150px;
+  }
+  .line-fence-top {
+    width: 1px;
+    height: 55px;
+    margin: 0 auto;
+    background-color: #dadada;
+  }
+  .line-fence-center {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid #dadada;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .line-fence-center img {
+    width: 25px;
+    height: 25px;
+  }
+  .line-fence-bottom {
+    width: 1px;
+    height: 55px;
+    margin: 0 auto;
+    background-color: #dadada;
+  }
+  .quote-item-eng {
+    width: 550px;
+    height: 50px;
+    position: absolute;
+    top: 40px;
+    left: 410px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  .quote-item-viet {
+    width: 550px;
+    height: 50px;
+    position: absolute;
+    top: 95px;
+    left: 410px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+  }
+  /*Part3 Blog*/
+  .part3-blog {
+    position: relative;
+    width: 100%;
+    margin-top: 60px;
+  }
+  .part3-title {
+    width: 700px;
+    height: 60px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 50px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .blog-slide {
+    width: 100%;
+    margin-top: 25px;
+    position: relative;
+  }
+  .blog-slide-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    opacity: 0;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-prev > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide-next {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    opacity: 0;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-next > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-30%, -50%);
+  }
+  .blog-slide:hover .blog-slide-prev {
+    opacity: 1;
+  }
+  .blog-slide:hover .blog-slide-next {
+    opacity: 1;
+  }
+
+  .blog-slide-container {
+    width: 1000px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .blog-slide-inner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 470px;
+    transition: 1s;
+  }
+  .blog-slide-content {
+    position: absolute;
+    left: -345px;
+    top: 0;
+    display: flex;
+    transition: 0.5s;
+  }
+  @keyframes move-right {
+    0% {
+      left: -690px;
+    }
+    100% {
+      left: -345px;
+    }
+  }
+  @keyframes move-left {
+    0% {
+      left: 0px;
+    }
+    100% {
+      left: -345px;
+    }
+  }
+  .blog-item {
+    margin-right: 35px;
+    width: 310px;
+    height: 470px;
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+  }
+  .blog-item-photo {
+    width: 325px;
+    height: 250px;
+  }
+  .blog-item-photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .blog-item-info {
+    width: 285px;
+    margin: 16px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-item-date {
+    width: 143px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .blog-item-date > div {
+    width: 120px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-author {
+    width: 63px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-author > img {
+    width: 15px;
+    height: 15px;
+  }
+  .blog-item-author > div {
+    width: 44px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-title {
+    width: 285px;
+    height: 60px;
+    margin: 6px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 26px;
+    color: #000000;
+  }
+  .blog-item-summary {
+    width: 285px;
+    height: 60px;
+    margin: 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .blog-item-seeMore {
+    width: 80px;
+    height: 20px;
+    margin: 10px 20px 0px auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    color: #32323d;
+  }
+  .blog-item-seeMore:hover {
+    color: orangered;
+  }
+}
+
+@media only screen and (min-width: 769px) and (max-width: 1023px) {
+  /*header*/
+  .menu-mobile-container > a:nth-child(2) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .container {
+    width: 100%;
+    position: relative;
+    margin-top: 124px;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .about-store {
+    display: none;
+  }
+  .part1-myproduct {
+    width: 100%;
+    overflow: visible;
+    margin: 0 auto;
+  }
+  .title-part1 {
+    margin: 0px auto 0px auto;
+    padding-top: 20px;
+    width: 700px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 38px;
+    line-height: 50px;
+  }
+  .row-button {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+  }
+  .hot-button-container,
+  .new-button-container {
+    width: 50%;
+  }
+  .hot-button {
+    margin: 0px 25px 0px auto;
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .hot-button:hover {
+    cursor: pointer;
+  }
+  .new-button {
+    margin: 0px auto 0 25px;
+    width: 180px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 23px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .new-button:hover {
+    cursor: pointer;
+  }
+  .active-pagination {
+    color: white;
+    background-color: var(--button-color);
+  }
+  .row1-part1 {
+    width: 100%;
+    margin: 40px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .row2-part1 {
+    width: 100%;
+    margin: 30px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .container-1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    position: relative;
+    overflow: visible;
+    visibility: visible;
+  }
+  .container-2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    visibility: hidden;
+  }
+  .container-1 .hot-item:last-child {
+    display: none;
+  }
+  .container-2 .new-item:last-child {
+    display: none;
+  }
+  /*Common Part: Item */
+  .item {
+    width: 230px;
+    height: 375px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+    margin: 0 17.5px 0 17.5px;
+  }
+  .item:hover .back-image {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .item-image {
+    width: 215px;
+    height: 215px;
+    margin: 12.5px auto 0px auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .front-image {
+    height: 100%;
+    opacity: 1;
+    background-color: white;
+  }
+  .back-image {
+    display: none;
+  }
+  .item-name {
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .item-name:hover {
+    color: orangered;
+  }
+  .price-before-reduction {
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price-after-reduction {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 22px;
+    color: var(--text-price-color);
+  }
+  .line-item {
+    margin: 15px auto 0px auto;
+    width: 85px;
+    height: 0px;
+    border: 0.5px dashed #000000;
+  }
+  .detail-item {
+    margin: 5px auto 0px auto;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+  }
+  .detail-item:hover {
+    color: orangered;
+  }
+  /*sub-banner*/
+  .sub-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    margin: 60px auto 0px auto;
+    background-image: url(/public/images/HomePage/sub-banner-mobile1.jpg);
+    background-position: 50% 0%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .sub-banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .text-sub-banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .line1-text-sub-banner {
+    position: absolute;
+    height: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+  .line2-text-sub-banner {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 60px;
+    top: 37%;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    left: 50%;
+    width: 500px;
+    transform: translateX(-50%);
+    height: 30px;
+    top: 67%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  /*Part 2 Guitar Show*/
+  .part2-guitar-show {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+  }
+  .part2-title {
+    width: 500px;
+    height: 60px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 38px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .part2-presentation {
+    margin: 20px auto 0px auto;
+    width: 90%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .part2-seeAllButton {
+    text-decoration: none;
+    width: 150px;
+    height: 40px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+  }
+  .part2-seeAllButton:hover {
+    background-color: red;
+  }
+  .part2-some-guitar-show {
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+  }
+  /*Common Part Guitar Show Item*/
+  .part2-guitar-show-item {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 540px;
+    height: 320px;
+    margin: 20px auto;
+    border: 7px solid #bdb4b4;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: 0.5s;
+    position: relative;
+  }
+  .part2-guitar-show-item:hover .part2-artist-name {
+    opacity: 0.3;
+  }
+  .artist-photo {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .part2-artist-name {
+    position: absolute;
+    height: 50px;
+    width: 270px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .overlay-show {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    clip-path: polygon(0 0, 55% 0, 35% 100%, 0 100%);
+  }
+  .show-presentation {
+    position: absolute;
+    width: 270px;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .show-presentation-time {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore {
+    margin: 30px auto 0px auto;
+    width: 100px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore:hover {
+    color: orangered;
+  }
+  /* Part2-item1*/
+  #part2-item1 {
+    transform: translateX(75px);
+  }
+  #part2-item1 .overlay-show {
+    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+  }
+  #part2-item1 .part2-artist-name {
+    left: 250px;
+    top: 110px;
+  }
+  #part2-item1 .part2-artist-name {
+    left: 250px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item1 .show-presentation {
+    left: 250px;
+    top: 100px;
+  }
+
+  /*Part2-item2*/
+  #part2-item2 {
+    transform: translate(-75px);
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 80px;
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item2 .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Part2-item3*/
+  #part2-item3 {
+    transform: translateX(75px);
+  }
+  #part2-item3 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item3 .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Quote*/
+  .quote-part2 {
+    width: 700px;
+    height: 190px;
+    margin: 70px auto 0px auto;
+    border: 2px solid rgb(238, 238, 238);
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+  }
+  .quote-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .quote-item-photo {
+    display: none;
+  }
+  .quote-item-photo img {
+    width: 100%;
+    height: 100%;
+  }
+  .quote-item-name {
+    position: absolute;
+    right: 50px;
+    bottom: 40px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .quote-item-job {
+    position: absolute;
+    right: 50px;
+    bottom: 15px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .line-fence {
+    top: 8px;
+    left: 35px;
+    position: absolute;
+  }
+  .line-fence-top {
+    width: 5px;
+    height: 110px;
+    background-color: rgb(179, 179, 179);
+  }
+  .line-fence-center {
+    display: none;
+  }
+  .line-fence-center img {
+    width: 25px;
+    height: 25px;
+    display: none;
+  }
+  .quote-item-eng {
+    top: 40px;
+    left: 410px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 20px 5px 5px 40px;
+  }
+  .quote-item-viet {
+    width: 600px;
+    margin: 0 auto;
+    padding-top: 15px;
+    left: 410px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+
+    padding: 5px 5px 20px 40px;
+  }
+  /*Part3 Blog*/
+  .part3-blog {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+  }
+  .part3-title {
+    width: 700px;
+    height: 60px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 38px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .blog-slide {
+    width: 99%;
+    margin: 0 auto;
+    margin-top: 25px;
+    position: relative;
+  }
+  .blog-slide-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-prev > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide-next {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-next > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-30%, -50%);
+  }
+  .blog-slide:hover .blog-slide-prev {
+    opacity: 1;
+  }
+  .blog-slide:hover .blog-slide-next {
+    opacity: 1;
+  }
+
+  .blog-slide-container {
+    width: 665px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .blog-slide-inner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 470px;
+    transition: 1s;
+  }
+  .blog-slide-content {
+    position: absolute;
+    left: -355px;
+    top: 0;
+    display: flex;
+    transition: 0.5s;
+  }
+  @keyframes move-right {
+    0% {
+      left: -710px;
+    }
+    100% {
+      left: -355px;
+    }
+  }
+  @keyframes move-left {
+    0% {
+      left: 0px;
+    }
+    100% {
+      left: -355px;
+    }
+  }
+  .blog-item {
+    margin-right: 45px;
+    width: 310px;
+    height: 470px;
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+  }
+  .blog-item-photo {
+    width: 325px;
+    height: 250px;
+  }
+  .blog-item-photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .blog-item-info {
+    width: 285px;
+    margin: 16px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-item-date {
+    width: 143px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .blog-item-date > div {
+    width: 120px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-author {
+    width: 63px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-author > img {
+    width: 15px;
+    height: 15px;
+  }
+  .blog-item-author > div {
+    width: 44px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-title {
+    width: 285px;
+    height: 60px;
+    margin: 6px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 26px;
+    color: #000000;
+  }
+  .blog-item-summary {
+    width: 285px;
+    height: 60px;
+    margin: 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .blog-item-seeMore {
+    width: 80px;
+    height: 20px;
+    margin: 10px 20px 0px auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    color: #32323d;
+  }
+  .blog-item-seeMore:hover {
+    color: orangered;
+  }
+}
+
+@media only screen and (min-width: 577px) and (max-width: 768px) {
+  /*header*/
+  .menu-mobile-container > a:nth-child(2) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .container {
+    width: 100%;
+    position: relative;
+    margin-top: 124px;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .about-store {
+    display: none;
+  }
+  .part1-myproduct {
+    width: 100%;
+    overflow: visible;
+    margin: 0 auto;
+  }
+  .title-part1 {
+    margin: 0px auto 0px auto;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 50px;
+  }
+  .row-button {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+  }
+  .hot-button-container,
+  .new-button-container {
+    width: 50%;
+  }
+  .hot-button {
+    margin: 0px 25px 0px auto;
+    width: 100px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .hot-button:hover {
+    cursor: pointer;
+  }
+  .new-button {
+    margin: 0px auto 0 25px;
+    width: 140px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 22px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .new-button:hover {
+    cursor: pointer;
+  }
+  .active-pagination {
+    color: white;
+    background-color: var(--button-color);
+  }
+  .row1-part1 {
+    width: 100%;
+    margin: 40px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .row2-part1 {
+    width: 100%;
+    margin: 30px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .container-1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    position: relative;
+    overflow: visible;
+    visibility: visible;
+  }
+  .container-2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    visibility: hidden;
+  }
+  .container-1 .hot-item:last-child {
+    display: none;
+  }
+  .container-1 .hot-item:nth-child(3) {
+    display: none;
+  }
+  .container-2 .new-item:last-child {
+    display: none;
+  }
+  .container-2 .new-item:nth-child(3) {
+    display: none;
+  }
+  /*Common Part: Item */
+  .item {
+    width: 230px;
+    height: 375px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+    margin: 0 25px 0 25px;
+  }
+  .item:hover .back-image {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .item-image {
+    width: 215px;
+    height: 215px;
+    margin: 12.5px auto 0px auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .front-image {
+    height: 100%;
+    opacity: 1;
+    background-color: white;
+  }
+  .back-image {
+    display: none;
+  }
+  .item-name {
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .item-name:hover {
+    color: orangered;
+  }
+  .price-before-reduction {
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price-after-reduction {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 22px;
+    color: var(--text-price-color);
+  }
+  .line-item {
+    margin: 15px auto 0px auto;
+    width: 85px;
+    height: 0px;
+    border: 0.5px dashed #000000;
+  }
+  .detail-item {
+    margin: 5px auto 0px auto;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+  }
+  .detail-item:hover {
+    color: orangered;
+  }
+  /*sub-banner*/
+  .sub-banner {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+    margin: 50px auto 0px auto;
+    background-image: url(/public/images/HomePage/sub-banner-mobile1.jpg);
+    background-position: 50% 0%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .sub-banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .text-sub-banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .line1-text-sub-banner {
+    position: absolute;
+    height: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+  .line2-text-sub-banner {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 60px;
+    top: 35%;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    width: 350px;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    left: 50%;
+    width: 500px;
+    transform: translateX(-50%);
+    height: 30px;
+    top: 67%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  /*Part 2 Guitar Show*/
+  .part2-guitar-show {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+  }
+  .part2-title {
+    width: 500px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .part2-presentation {
+    margin: 20px auto 0px auto;
+    width: 90%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 30px;
+    color: #000000;
+  }
+  .part2-seeAllButton {
+    text-decoration: none;
+    width: 120px;
+    height: 35px;
+    margin: 25px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+  }
+  .part2-seeAllButton:hover {
+    background-color: red;
+  }
+  .part2-some-guitar-show {
+    margin-top: 30px;
+    width: 100%;
+    position: relative;
+  }
+  /*Common Part Guitar Show Item*/
+  .part2-guitar-show-item {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 540px;
+    height: 320px;
+    margin: 20px auto;
+    border: 7px solid #bdb4b4;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: 0.5s;
+    position: relative;
+  }
+  .part2-guitar-show-item:hover .part2-artist-name {
+    opacity: 0.3;
+  }
+  .artist-photo {
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  .part2-artist-name {
+    position: absolute;
+    height: 50px;
+    width: 270px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 50px;
+    text-align: center;
+    color: #ffffff;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .overlay-show {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+    clip-path: polygon(0 0, 55% 0, 35% 100%, 0 100%);
+  }
+  .show-presentation {
+    position: absolute;
+    width: 270px;
+    z-index: 2;
+    transition: all 0.5s;
+    transition-delay: 0.5s;
+  }
+  .show-presentation-time {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 200;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore {
+    margin: 30px auto 0px auto;
+    width: 100px;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: center;
+    color: #ffffff;
+  }
+  .show-presentation-seeMore:hover {
+    color: orangered;
+  }
+  /* Part2-item1*/
+  #part2-item1 .overlay-show {
+    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+  }
+  #part2-item1 .part2-artist-name {
+    left: 250px;
+    top: 110px;
+  }
+  #part2-item1 .part2-artist-name {
+    left: 250px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item1 .show-presentation {
+    left: 250px;
+    top: 100px;
+  }
+
+  /*Part2-item2*/
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 80px;
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item2 .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Part2-item3*/
+  #part2-item3 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  #part2-item3 .show-presentation {
+    left: 0px;
+    top: 100px;
+  }
+  /*Quote*/
+  .quote-part2 {
+    width: 540px;
+    height: 190px;
+    margin: 50px auto 0px auto;
+    border: 2px solid rgb(238, 238, 238);
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+  }
+  .quote-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .quote-item-photo {
+    display: none;
+  }
+  .quote-item-photo img {
+    width: 100%;
+    height: 100%;
+  }
+  .quote-item-name {
+    position: absolute;
+    right: 50px;
+    bottom: 40px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .quote-item-job {
+    position: absolute;
+    right: 50px;
+    bottom: 15px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .line-fence {
+    top: 8px;
+    left: 20px;
+    position: absolute;
+  }
+  .line-fence-top {
+    width: 5px;
+    height: 110px;
+    background-color: rgb(179, 179, 179);
+  }
+  .line-fence-center {
+    display: none;
+  }
+  .line-fence-center img {
+    width: 25px;
+    height: 25px;
+    display: none;
+  }
+  .quote-item-eng {
+    top: 40px;
+    left: 410px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    width: 500px;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 20px 5px 5px 40px;
+  }
+  .quote-item-viet {
+    width: 500px;
+    margin: 0 auto;
+    padding-top: 15px;
+    left: 410px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+
+    padding: 5px 5px 20px 40px;
+  }
+  /*Part3 Blog*/
+  .part3-blog {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+  }
+  .part3-title {
+    width: 500px;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 35px;
+    line-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .blog-slide {
+    width: 99%;
+    margin: 0 auto;
+    margin-top: 25px;
+    position: relative;
+  }
+  .blog-slide-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-prev > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide-next {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-next > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-30%, -50%);
+  }
+  .blog-slide-container {
+    width: 500px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .blog-slide-inner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 470px;
+    transition: 1s;
+  }
+  .blog-slide-content {
+    position: absolute;
+    left: -275px;
+    top: 0;
+    display: flex;
+    transition: 0.5s;
+  }
+  @keyframes move-right {
+    0% {
+      left: -637.5px;
+    }
+    100% {
+      left: -275px;
+    }
+  }
+  @keyframes move-left {
+    0% {
+      left: 87.5px;
+    }
+    100% {
+      left: -275px;
+    }
+  }
+  .blog-item {
+    margin-right: 37.5px;
+    width: 325px;
+    height: 470px;
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+  }
+  .blog-item-photo {
+    width: 325px;
+    height: 250px;
+  }
+  .blog-item-photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .blog-item-info {
+    width: 285px;
+    margin: 16px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-item-date {
+    width: 143px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .blog-item-date > div {
+    width: 120px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-author {
+    width: 63px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-author > img {
+    width: 15px;
+    height: 15px;
+  }
+  .blog-item-author > div {
+    width: 44px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-title {
+    width: 285px;
+    height: 60px;
+    margin: 6px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 26px;
+    color: #000000;
+  }
+  .blog-item-summary {
+    width: 285px;
+    height: 60px;
+    margin: 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .blog-item-seeMore {
+    width: 80px;
+    height: 20px;
+    margin: 10px 20px 0px auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    color: #32323d;
+  }
+  .blog-item-seeMore:hover {
+    color: orangered;
+  }
+}
+
+@media only screen and (min-width: 350px) and (max-width: 576px) {
+  /*Header*/
+  .header-desktop {
+    display: none;
+  }
+  .menu-mobile-container > a:nth-child(2) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .container {
+    width: 100%;
+    position: relative;
+    margin-top: 90px;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .about-store {
+    display: none;
+  }
+  .part1-myproduct {
+    width: 100%;
+    overflow: visible;
+    margin: 0 auto;
+  }
+  .title-part1 {
+    margin: 0px auto 0px auto;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 40px;
+  }
+  .row-button {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+  }
+  .hot-button-container,
+  .new-button-container {
+    width: 50%;
+  }
+  .hot-button {
+    margin: 0px 25px 0px auto;
+    width: 90px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .hot-button:hover {
+    cursor: pointer;
+  }
+  .new-button {
+    margin: 0px auto 0 25px;
+    width: 120px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 22px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .new-button:hover {
+    cursor: pointer;
+  }
+  .active-pagination {
+    color: white;
+    background-color: var(--button-color);
+  }
+  .row1-part1 {
+    width: 100%;
+    margin: 40px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .row2-part1 {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .container-1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    position: relative;
+    overflow: visible;
+    visibility: visible;
+    flex-wrap: wrap;
+  }
+  .container-2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    visibility: hidden;
+    flex-wrap: wrap;
+  }
+  .container-1 .hot-item:last-child {
+    display: none;
+  }
+  .container-1 .hot-item:nth-child(3) {
+    display: none;
+  }
+  .container-2 .new-item:last-child {
+    display: none;
+  }
+  .container-2 .new-item:nth-child(3) {
+    display: none;
+  }
+  /*Common Part: Item */
+  .item {
+    width: 230px;
+    height: 375px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+    margin: 0 15px 25px 15px;
+  }
+
+  .item:hover .back-image {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .item-image {
+    width: 215px;
+    height: 215px;
+    margin: 12.5px auto 0px auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .front-image {
+    height: 100%;
+    opacity: 1;
+    background-color: white;
+  }
+  .back-image {
+    display: none;
+  }
+  .item-name {
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 22px;
+  }
+  .item-name:hover {
+    color: orangered;
+  }
+  .price-before-reduction {
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price-after-reduction {
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 22px;
+    color: var(--text-price-color);
+  }
+  .line-item {
+    margin: 15px auto 0px auto;
+    width: 85px;
+    height: 0px;
+    border: 0.5px dashed #000000;
+  }
+  .detail-item {
+    margin: 5px auto 0px auto;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+  }
+  .detail-item:hover {
+    color: orangered;
+  }
+  /*sub-banner*/
+  .sub-banner {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    margin: 30px auto 0px auto;
+    background-image: url(/public/images/HomePage/sub-banner-mobile1.jpg);
+    background-position: 50% 100%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .sub-banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .text-sub-banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .line1-text-sub-banner {
+    position: absolute;
+    top: 15%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 100%;
+    justify-content: center;
+  }
+  .line2-text-sub-banner {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    top: 37%;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 30px;
+    line-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    width: 100%;
+    top: 67%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    width: 100%;
+  }
+  /*Part 2 Guitar Show*/
+  .part2-guitar-show {
+    position: relative;
+    width: 100%;
+    margin-top: 30px;
+  }
+  .part2-title {
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .part2-presentation {
+    margin: 20px auto 0px auto;
+    width: 85%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 25px;
+    color: #000000;
+  }
+  .part2-seeAllButton {
+    text-decoration: none;
+    width: 100px;
+    height: 30px;
+    margin: 15px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+  }
+  .part2-seeAllButton:hover {
+    background-color: red;
+  }
+  .part2-some-guitar-show {
+    margin-top: 20px;
+    width: 100%;
+    position: relative;
+  }
+  /*Common Part Guitar Show Item*/
+  .part2-guitar-show-item {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 91%;
+    margin: 10px auto 0px auto;
+    padding-bottom: 15px;
+    position: relative;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  }
+  .artist-photo {
+    display: block;
+    width: calc(100% - 20px);
+    height: 53.33vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding-top: 10px;
+    object-fit: cover;
+  }
+  .part2-artist-name {
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 25px;
+    position: relative;
+    transform: translateY(-45%);
+    display: none;
+  }
+  .overlay-show {
+    display: none;
+  }
+  .show-presentation {
+    width: calc(90vw - 10px);
+    margin: 0px auto;
+    z-index: 100;
+    position: relative;
+    transform: translateY(-50%);
+    display: none;
+  }
+  .show-presentation-mobile {
+    width: 85vw;
+    margin: 0px auto;
+    z-index: 100;
+  }
+  .show-presentation-mobile-title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 15px;
+  }
+  .show-presentation-mobile-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 18px;
+    margin-top: 5px;
+  }
+  /* Part2-item1*/
+  #part2-item1 .overlay-show {
+    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+  }
+  /*Part2-item2*/
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 80px;
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  /*Part2-item3*/
+  #part2-item3 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  /*Quote*/
+  .quote-part2 {
+    width: 95%;
+    margin: 30px auto 0px auto;
+    border: 2px solid rgb(238, 238, 238);
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+    padding-bottom: 60px;
+  }
+  .quote-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .quote-item-photo {
+    display: none;
+  }
+  .quote-item-photo img {
+    width: 100%;
+    height: 100%;
+  }
+  .quote-item-name {
+    position: absolute;
+    right: 10%;
+    bottom: -35px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .quote-item-job {
+    position: absolute;
+    right: 10%;
+    bottom: -60px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .line-fence {
+    top: 8px;
+    left: 20px;
+    position: absolute;
+    display: none;
+  }
+  .line-fence-top {
+    width: 5px;
+    height: 110px;
+    background-color: rgb(179, 179, 179);
+  }
+  .line-fence-center {
+    display: none;
+  }
+  .line-fence-center img {
+    width: 25px;
+    height: 25px;
+    display: none;
+  }
+  .quote-item-eng {
+    top: 40px;
+    left: 410px;
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 10px 5px 5px 15px;
+    border-left: 5px solid #c4c4c4;
+    margin-left: 10px;
+  }
+  .quote-item-viet {
+    margin: 0 auto;
+    padding-top: 15px;
+    left: 410px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    padding: 5px 5px 10px 15px;
+    border-left: 5px solid #c4c4c4;
+    margin-left: 10px;
+  }
+  /*Part3 Blog*/
+  .part3-blog {
+    position: relative;
+    width: 100%;
+    margin-top: 40px;
+  }
+  .part3-title {
+    width: 90%;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 25px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .blog-slide {
+    width: 98%;
+    margin: 0 auto;
+    margin-top: 25px;
+    position: relative;
+  }
+  .blog-slide-prev {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-prev > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide-next {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    font-size: 30px;
+    transition: 1s;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-next > i {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translate(-30%, -50%);
+  }
+  .blog-slide-container {
+    width: 325px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .blog-slide-inner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 470px;
+    transition: 1s;
+  }
+  .blog-slide-content {
+    position: absolute;
+    left: -362.5px;
+    top: 0;
+    display: flex;
+    transition: 0.5s;
+  }
+  @keyframes move-right {
+    0% {
+      left: -725px;
+    }
+    100% {
+      left: -362.5px;
+    }
+  }
+  @keyframes move-left {
+    0% {
+      left: 0px;
+    }
+    100% {
+      left: -362.5px;
+    }
+  }
+  .blog-item {
+    margin-right: 37.5px;
+    width: 325px;
+    height: 470px;
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+  }
+  .blog-item-photo {
+    width: 325px;
+    height: 250px;
+  }
+  .blog-item-photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .blog-item-info {
+    width: 285px;
+    margin: 16px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-item-date {
+    width: 143px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-date > img {
+    width: 16px;
+    height: 16px;
+  }
+  .blog-item-date > div {
+    width: 120px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-author {
+    width: 63px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-author > img {
+    width: 15px;
+    height: 15px;
+  }
+  .blog-item-author > div {
+    width: 44px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-title {
+    width: 285px;
+    height: 60px;
+    margin: 6px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 26px;
+    color: #000000;
+  }
+  .blog-item-summary {
+    width: 285px;
+    height: 60px;
+    margin: 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .blog-item-seeMore {
+    width: 80px;
+    height: 20px;
+    margin: 10px 20px 0px auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+    text-align: right;
+    color: #32323d;
+  }
+  .blog-item-seeMore:hover {
+    color: orangered;
+  }
+}
+
+@media only screen and (max-width: 349px) {
+  .menu-mobile-container > a:nth-child(2) {
+    font-weight: 500;
+    color: red;
+  }
+  /*Main*/
+  .container {
+    width: 100%;
+    position: relative;
+    margin-top: 90px;
+  }
+  .main-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .about-store {
+    display: none;
+  }
+  .part1-myproduct {
+    width: 100%;
+    overflow: visible;
+    margin: 0 auto;
+  }
+  .title-part1 {
+    margin: 0px auto 0px auto;
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+  }
+  .row-button {
+    width: 100%;
+    margin: 10px auto 0px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .hot-button {
+    margin: 0px 5px 10px 5px;
+    width: 70px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .hot-button:hover {
+    cursor: pointer;
+  }
+  .new-button {
+    margin: 0px 5px 0px 5px;
+    width: 100px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 20px;
+    background-color: #f2f0f0;
+    border-radius: 999px;
+  }
+  .new-button:hover {
+    cursor: pointer;
+  }
+  .active-pagination {
+    color: white;
+    background-color: var(--button-color);
+  }
+  .row1-part1 {
+    width: 100%;
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .row2-part1 {
+    width: 100%;
+    margin: 0px auto;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    position: relative;
+  }
+  .container-1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    opacity: 1;
+    transition: 0.5s;
+    position: relative;
+    overflow: visible;
+    visibility: visible;
+    flex-wrap: wrap;
+  }
+  .container-2 {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+    visibility: hidden;
+    flex-wrap: wrap;
+  }
+  .container-1 .hot-item:last-child {
+    display: none;
+  }
+  .container-1 .hot-item:nth-child(3) {
+    display: none;
+  }
+  .container-2 .new-item:last-child {
+    display: none;
+  }
+  .container-2 .new-item:nth-child(3) {
+    display: none;
+  }
+  /*Common Part: Item */
+  .item {
+    width: 220px;
+    height: 340px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+    position: relative;
+    z-index: 1;
+    transition: 0.5s;
+    margin: 0 15px 25px 15px;
+  }
+  .item:hover .back-image {
+    opacity: 1;
+    transform: rotateY(0deg);
+  }
+  .item-image {
+    width: 205px;
+    height: 205px;
+    margin: 12.5px auto 0px auto;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+  }
+  .front-image {
+    height: 100%;
+    opacity: 1;
+    background-color: white;
+  }
+  .back-image {
+    display: none;
+  }
+  .item-name {
+    margin: 20px auto 0px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 25px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 22px;
+  }
+  .item-name:hover {
+    color: orangered;
+  }
+  .price-before-reduction {
+    height: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .price-after-reduction {
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+    color: var(--text-price-color);
+  }
+  .line-item {
+    margin: 10px auto 0px auto;
+    width: 85px;
+    height: 0px;
+    border: 0.5px dashed #000000;
+  }
+  .detail-item {
+    margin: 5px auto 0px auto;
+    width: 80px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 25px;
+  }
+  .detail-item:hover {
+    color: orangered;
+  }
+  /*sub-banner*/
+  .sub-banner {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    margin: 10px auto 0px auto;
+    background-image: url(/public/images/HomePage/sub-banner-mobile1.jpg);
+    background-position: 50% 100%;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .sub-banner-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .text-sub-banner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 2;
+  }
+  .line1-text-sub-banner {
+    position: absolute;
+    top: 15%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 100%;
+    justify-content: center;
+  }
+  .line2-text-sub-banner {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    top: 37%;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 22px;
+    line-height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+  }
+  .line3-text-sub-banner {
+    position: absolute;
+    width: 100%;
+    top: 70%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+
+    width: 100%;
+  }
+  /*Part 2 Guitar Show*/
+  .part2-guitar-show {
+    position: relative;
+    width: 100%;
+    margin-top: 25px;
+  }
+  .part2-title {
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .part2-presentation {
+    margin: 10px auto 0px auto;
+    width: 85%;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 22px;
+    color: #000000;
+  }
+  .part2-seeAllButton {
+    text-decoration: none;
+    width: 90px;
+    height: 25px;
+    margin: 15px auto 0px auto;
+    background: var(--button-color);
+    border-radius: 999px;
+    box-sizing: border-box;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+  }
+  .part2-seeAllButton:hover {
+    background-color: red;
+  }
+  .part2-some-guitar-show {
+    margin-top: 20px;
+    width: 100%;
+    position: relative;
+  }
+  /*Common Part Guitar Show Item*/
+  .part2-guitar-show-item {
+    display: block;
+    text-decoration: none;
+    color: black;
+    width: 95%;
+    margin: 10px auto 0px auto;
+    padding-bottom: 15px;
+    position: relative;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.25);
+  }
+  .artist-photo {
+    display: block;
+    width: 85vw;
+    height: 53.33vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding-top: 7px;
+  }
+  .part2-artist-name {
+    width: 85vw;
+    margin: 10px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    position: relative;
+    transform: translateY(-45%);
+    display: none;
+  }
+  .overlay-show {
+    display: none;
+  }
+  .show-presentation {
+    width: calc(90vw - 10px);
+    margin: 0px auto;
+    z-index: 100;
+    position: relative;
+    transform: translateY(-50%);
+    display: none;
+  }
+  .show-presentation-mobile {
+    width: 85vw;
+    margin: 0px auto;
+    z-index: 100;
+  }
+  .show-presentation-mobile-title {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 15px;
+  }
+  .show-presentation-mobile-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 18px;
+    margin-top: 5px;
+  }
+  /* Part2-item1*/
+  #part2-item1 .overlay-show {
+    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+  }
+  /*Part2-item2*/
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 80px;
+  }
+  #part2-item2 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  /*Part2-item3*/
+  #part2-item3 .part2-artist-name {
+    left: 0px;
+    top: 50px;
+    z-index: 2;
+    opacity: 1;
+  }
+  /*Quote*/
+  .quote-part2 {
+    width: 95%;
+    margin: 25px auto 0px auto;
+    border: 2px solid rgb(238, 238, 238);
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+    padding-bottom: 55px;
+  }
+  .quote-item {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .quote-item-photo {
+    display: none;
+  }
+  .quote-item-photo img {
+    width: 100%;
+    height: 100%;
+  }
+  .quote-item-name {
+    position: absolute;
+    right: 8%;
+    bottom: -35px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .quote-item-job {
+    position: absolute;
+    right: 8%;
+    bottom: -55px;
+    width: 130px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+  }
+  .line-fence {
+    top: 8px;
+    left: 20px;
+    position: absolute;
+    display: none;
+  }
+  .line-fence-top {
+    width: 5px;
+    height: 110px;
+    background-color: rgb(179, 179, 179);
+  }
+  .line-fence-center {
+    display: none;
+  }
+  .line-fence-center img {
+    width: 25px;
+    height: 25px;
+    display: none;
+  }
+  .quote-item-eng {
+    font-family: Roboto;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    margin: 0 auto;
+    margin-top: 10px;
+    padding: 10px 5px 5px 15px;
+    border-left: 5px solid #c4c4c4;
+    margin-left: 10px;
+    display: none;
+  }
+  .quote-item-viet {
+    margin: 15px auto 0px auto;
+    padding-top: 15px;
+    font-family: Roboto;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    color: #000000;
+    padding: 10px 5px 10px 15px;
+    border-left: 5px solid #c4c4c4;
+    margin-left: 10px;
+  }
+  /*Part3 Blog*/
+  .part3-blog {
+    position: relative;
+    width: 100%;
+    margin-top: 25px;
+  }
+  .part3-title {
+    width: 90%;
+    margin: 0 auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #32323d;
+  }
+  .blog-slide {
+    width: 98%;
+    margin: 0 auto;
+    margin-top: 15px;
+    position: relative;
+  }
+  .blog-slide-prev {
+    position: absolute;
+    left: 0;
+    top: 32%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-prev > i {
+    position: absolute;
+    top: 57%;
+    left: 55%;
+    width: 25px;
+    height: 25px;
+    transform: translate(-40%, -50%);
+  }
+  .blog-slide-next {
+    position: absolute;
+    right: 0;
+    top: 32%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 3;
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 999px;
+    border: 1px solid #c4c4c4;
+  }
+  .blog-slide-next > i {
+    position: absolute;
+    top: 57%;
+    left: 55%;
+    width: 25px;
+    height: 25px;
+    transform: translate(-30%, -50%);
+  }
+  .blog-slide-container {
+    width: 220px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .blog-slide-inner {
+    width: 100%;
+    position: relative;
+    display: flex;
+    height: 400px;
+    transition: 1s;
+  }
+  .blog-slide-content {
+    position: absolute;
+    left: -250px;
+    top: 0;
+    display: flex;
+    transition: 0.5s;
+  }
+  @keyframes move-right {
+    0% {
+      left: -500px;
+    }
+    100% {
+      left: -250px;
+    }
+  }
+  @keyframes move-left {
+    0% {
+      left: 0px;
+    }
+    100% {
+      left: -250px;
+    }
+  }
+  .blog-item {
+    margin-right: 30px;
+    width: 220px;
+    height: 380px;
+    border: 1px solid #dadada;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+  }
+  .blog-item-photo {
+    width: 220px;
+    height: 170px;
+  }
+  .blog-item-photo > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .blog-item-info {
+    width: 200px;
+    margin: 13px auto 0px auto;
+    display: flex;
+    justify-content: space-between;
+  }
+  .blog-item-date {
+    width: 140px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-date > img {
+    width: 13px;
+    height: 13px;
+  }
+  .blog-item-date > div {
+    width: 120px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-author {
+    width: 63px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .blog-item-author > img {
+    width: 13px;
+    height: 13px;
+  }
+  .blog-item-author > div {
+    width: 44px;
+    height: 30px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 34px;
+    color: #000000;
+  }
+  .blog-item-title {
+    width: 200px;
+    height: 44px;
+    margin: 6px auto 0px auto;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .blog-item-summary {
+    width: 200px;
+    margin: 0px auto;
+    margin-top: 5px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 20px;
+    color: #000000;
+  }
+  .blog-item-seeMore {
+    width: 80px;
+    height: 20px;
+    margin: 5px 20px 0px auto;
+    font-family: Dancing Script;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: right;
+    color: #32323d;
+  }
+  .blog-item-seeMore:hover {
+    color: orangered;
+  }
+}
+</style>

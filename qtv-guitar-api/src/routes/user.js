@@ -61,6 +61,10 @@ router.post("/login", async (req, res) => {
   } else return res.status(401).json({ message: "Password incorrect" });
 });
 
+router.post("/login-google", async(req, res) => {
+  
+})
+
 router.patch("/updateUser", async (req, res) => {
   if (req.method !== "PATCH") return;
   const { address, payment, name, phone } = req.body;
