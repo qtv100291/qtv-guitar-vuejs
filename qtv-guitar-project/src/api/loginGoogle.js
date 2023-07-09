@@ -1,14 +1,15 @@
 import axios from "./index";
 import { setCookie } from "../utils/cookie";
 
-const apiEndPointGoogleLogin = "/api/auth/log-in-google";
-const tokenKey = "token_qtv";
+const apiEndPointGoogleLogin = "/user/login-google";
+const tokenKey = "token_qtv_guitar";
+const refreshTokenKey = "refreshToken_qtv_guitar";
 
 export async function loginGoogle(userData) {
-  const { data: tokenUser } = await axios.post(
+  const { accessToken, refreshToken } = await axios.post(
     apiEndPointGoogleLogin,
     userData
   );
-  setCookie(tokenKey, tokenUser.accessToken, 2);
-  setCookie("refreshToken_qtv_guitar", tokenUser.refreshToken, 14);
+  setCookie(tokenKey, accessToken, 2);
+  setCookie(refreshTokenKey, refreshToken, 14);
 }

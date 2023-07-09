@@ -1,54 +1,77 @@
 <template>
-  <div id="buttonDiv" class="{styles.buttonGoogleLogin}"></div>
+  <div id="buttonDiv" class="button-google-login"></div>
 </template>
 <script>
-import { onMounted } from "vue";
+import { watch } from "vue";
 import { loginGoogle } from "../../api/loginGoogle";
+import { useModalStore } from "../../stores/confirmModal";
+import { getServerMessage } from "@/utils/message";
 
 export default {
-  setup() {
-    onMounted(() => {
-      async function handleCredentialResponse(response) {
-        try {
-          await loginGoogle({ googleAccessToken: response.credential });
-          // MySwal.fire({
-          //   icon: "success",
-          //   html: "Đăng Nhập Thành Công",
-          //   showConfirmButton: false,
-          //   timer: 1250,
-          // }).then(() => {
-          //   window.location = "/";
-          // });
-        } catch (err) {
-          if (err.response && err.response.status === 409) {
-            // additionalFunctionDom.fixBody();
+  props: ["windowWidth"],
+  setup(props) {
+    const modalStore = useModalStore();
+    watch(
+      () => props.windowWidth,
+      () => {
+        async function handleCredentialResponse(response) {
+          try {
+            await loginGoogle({ googleAccessToken: response.credential });
+            modalStore.openModal(
+              getServerMessage("Sigin succes"),
+              false,
+              () => {
+                window.location = "/";
+              }
+            );
             // MySwal.fire({
-            //   icon: "error",
-            //   html: "Email Này Đã Được Sử Dụng",
+            //   icon: "success",
+            //   html: "Đăng Nhập Thành Công",
+            //   showConfirmButton: false,
+            //   timer: 1250,
             // }).then(() => {
-            //   additionalFunctionDom.releaseBody();
+            //   window.location = "/";
             // });
+          } catch (err) {
+            console.log(err);
           }
         }
+        // eslint-disable-next-line no-undef
+        google.accounts.id.initialize({
+          client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse,
+        });
+        // eslint-disable-next-line no-undef
+        google.accounts.id.renderButton(
+          document.getElementById("buttonDiv"),
+          {
+            theme: "filled_blue",
+            size: "large",
+            width: `${
+              props.windowWidth > 336 ? 320 : props.windowWidth * 0.95
+            }`,
+          } // customization attributes
+        );
       }
-      // eslint-disable-next-line no-undef
-      google.accounts.id.initialize({
-        client_id:
-          "1020234478913-eptfd3u3qg9kds0ngb44tijnb77gojn8.apps.googleusercontent.com",
-        callback: handleCredentialResponse,
-      });
-      // eslint-disable-next-line no-undef
-      google.accounts.id.renderButton(
-        document.getElementById("buttonDiv"),
-        {
-          theme: "filled_blue",
-          size: "large",
-          // width: `${props.windowWidth > 336 ? 320 : props.windowWidth * 0.95}`,
-        } // customization attributes
-      );
-    });
+    );
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.button-google-login {
+  width: 100%;
+  color: white;
+  outline: none;
+  border-radius: 3px;
+  display: inline-block;
+  border: 0px;
+  /* :global(#button-label) {
+          font-family: "Montserrat", sans-serif !important;
+          font-size: 16px !important;
+        }
+        @include mobile {
+          width: 150px;
+        } */
+}
+</style>

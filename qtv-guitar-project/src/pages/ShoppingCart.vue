@@ -38,7 +38,7 @@
 
                 <div
                   class="delete-button"
-                  @click="cartStore.removeFromCart(item._id)"
+                  @click="cartStore.removeFromCart(item._id, item.seatClass)"
                 >
                   <img
                     src="images/HomePage/delete-icon.png"

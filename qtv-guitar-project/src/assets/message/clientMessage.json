@@ -1,0 +1,6 @@
+{
+  "required field": "Không được bỏ trống mục này",
+  "invalid email": "Email không đúng định dạng",
+  "do not match password": "Mật khẩu không khớp",
+  "added to cart": "Đã thêm vào giỏ hàng"
+}

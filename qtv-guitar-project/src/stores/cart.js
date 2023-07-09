@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { setLocalStorage } from "@/utils/common";
+import { getClientMessage } from "@/utils/message";
 import { LOCAL_SHOPPING_CART_NAME } from "@/utils/constantValue";
 import { useModalStore } from "./confirmModal";
 
@@ -58,11 +59,7 @@ export const useCartStore = defineStore("cart", {
         else this.cart.push(item);
       }
       setLocalStorage(LOCAL_SHOPPING_CART_NAME, this.cart);
-      modalStore.openModal(true);
-      setTimeout(() => {
-        console.log("hiuhiu");
-        modalStore.openModal(false);
-      }, 1600);
+      modalStore.openModal(getClientMessage("added to cart"));
     },
     removeFromCart(itemId, seatClass) {
       let newCart;

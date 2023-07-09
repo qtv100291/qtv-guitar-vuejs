@@ -75,10 +75,7 @@ router.get("/:guitarType/:guitarId", async (req, res) => {
     const guitarId = req.params.guitarId;
     const model = guitar.get(guitarType);
     const guitarData = await model.findById(guitarId);
-    res
-      .header("Access-Control-Allow-Origin", "true")
-      .status(200)
-      .send(guitarData);
+    res.status(200).send(guitarData);
   } catch (err) {
     console.log(err);
   }

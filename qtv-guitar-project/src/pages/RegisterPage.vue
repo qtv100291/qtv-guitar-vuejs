@@ -22,18 +22,6 @@
             :error-value="userError.email ? userError.email : ''"
             :label="'Email Đăng Ký'"
           />
-          <!-- <input
-              type="text"
-              name="email"
-              id="email-sign-up"
-              required
-              v-model.trim="userInfo.email"
-            /> -->
-          <!-- <label for="email-sign-up">Email Đăng Ký</label> -->
-          <!-- <div class="empty-check-input">Bạn phải điền vào mục này</div>
-          <div class="email-name-check">
-            Email bạn điền không đúng định dạng
-          </div> -->
           <input-component
             v-model.trim="userInfo.name"
             isRequired
@@ -43,12 +31,8 @@
             :label="'Họ Tên'"
           />
           <input-component
-            :modelValue="userInfo.phone"
-            @update:modelValue="
-              (newValue) => {
-                userInfo.phone = onInputOnlyDigit(newValue);
-              }
-            "
+            v-model.trim="userInfo.phone"
+            isOnlyDigit
             isRequired
             :name="'phone'"
             :id="'phone-sign-up'"
@@ -56,18 +40,6 @@
             :label="'Số Điện Thoại'"
             :max-length="10"
           />
-          <!-- <div class="form-part">
-            <input
-              type="text"
-              name="phone"
-              id="phone-sign-up"
-              required
-              v-model.trim="userInfo.phoneNumber"
-            />
-            <label for="phone-sign-up">Số Điện Thoại</label>
-            <div class="empty-check-input">Bạn phải điền vào mục này</div>
-            <div class="mobile-phone-check">Số di động bao gồm 10 chữ số</div>
-          </div> -->
           <input-component
             v-model.trim="userInfo.password"
             isRequired
@@ -77,17 +49,6 @@
             :type-input="'password'"
             :label="'Mật Khẩu'"
           />
-          <!-- <div class="form-part">
-            <input
-              type="password"
-              name="password"
-              id="password-sign-up"
-              required
-              v-model.trim="userInfo.password"
-            />
-            <label for="password-sign-up">Mật Khẩu </label>
-            <div class="empty-check-input">Bạn phải điền vào mục này</div>
-          </div> -->
           <input-component
             v-model.trim="userInfo.passwordRecheck"
             isRequired
@@ -99,18 +60,6 @@
             :type-input="'password'"
             :label="'Nhập Lại Mật Khẩu'"
           />
-          <!-- <div class="form-part">
-            <input
-              type="password"
-              name="password"
-              id="password-sign-up-2"
-              required
-              v-model.trim="userInfo.passwordRecheck"
-            />
-            <label for="password-sign-up-2">Nhập Lại Mật Khẩu</label>
-            <div class="empty-check-input">Bạn phải điền vào mục này</div>
-            <div class="password-check">Mật khẩu không khớp</div>
-          </div> -->
           <div class="note-sign-up">
             <p>
               Khi bạn nhấn ĐĂNG KÝ, bạn đã đồng ý với những
@@ -131,6 +80,7 @@
             ĐĂNG KÝ
           </div>
           <div class="form-table-sign-up-button-sign-in">
+            Bạn đã có tài khoản?
             <router-link to="/dang-nhap">Đăng nhập</router-link>
           </div>
         </div>
@@ -142,17 +92,35 @@
 <script>
 import { reactive, ref } from "vue";
 import InputComponent from "../components/common/InputComponent.vue";
-import { onInputOnlyDigit } from "@/utils/common";
+import {
+  onInputOnlyDigit,
+  composeFunction,
+  checkEmpty,
+  checkEmailValidation,
+  checkRecheckPassword,
+} from "@/utils/common";
 export default {
   components: { InputComponent },
   setup() {
     const userTest = ref("");
     const userInfo = reactive({});
     const userError = reactive({});
-
+    const checkCondition = {
+      email: [checkEmpty, checkEmailValidation],
+      name: [checkEmpty],
+      phone: [checkEmpty],
+      password: [checkEmpty],
+      passwordRecheck: [checkEmpty, checkRecheckPassword],
+    };
     function checkInfoRegister() {
-
-      
+      let isAllValid = true;
+      for (let item in userInfo) {
+        userError[item] = composeFunction(userInfo[item], checkCondition[item]);
+        if (userError[item]) isAllValid = false;
+      }
+      if (isAllValid) {
+        console.log("hiuhiu");
+      }
     }
     return {
       userInfo,
@@ -228,59 +196,6 @@ html {
     line-height: 34px;
     transition: 0.5s;
   }
-  .form-part {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-    position: relative;
-    margin-top: 25px;
-  }
-  .form-part > label {
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    color: rgb(175, 175, 175);
-    transition: 0.25s;
-    font-size: 16px;
-    line-height: 16px;
-    background-color: white;
-    padding: 0 4px;
-  }
-  .form-part > input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid rgb(175, 175, 175);
-    font-size: 16px;
-    line-height: 42px;
-    border-radius: 3px;
-    text-indent: 10px;
-    outline: none;
-    background: none;
-    transition: 0.25s;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-  }
-  .form-part > input:hover {
-    border: 1px solid black;
-  }
-
-  .form-part > input:focus {
-    border: 1px solid cornflowerblue;
-  }
-  .form-part > input:focus + label {
-    font-size: 13px;
-    top: -6.5px;
-    color: cornflowerblue;
-  }
-  .form-part > input:valid + label {
-    font-size: 13px;
-    top: -6.5px;
-  }
   .label-head {
     padding-top: 20px;
     border-top: 1px solid rgb(175, 175, 175);
@@ -319,14 +234,7 @@ html {
     font-weight: 600;
   }
   .form-table-notification {
-    font-size: 16px;
-    line-height: 25px;
-    font-family: Roboto;
-    font-weight: 400;
-    text-align: center;
-    color: red;
-    padding-bottom: 15px;
-    height: 25px;
+    height: 15px;
   }
   .empty-check-input {
     background-color: rgba(0, 0, 0, 0.9);
@@ -453,6 +361,7 @@ html {
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
   .form-table-sign-in-button-sign-up a {
     text-decoration: none;
@@ -479,13 +388,13 @@ html {
     background-color: red;
   }
   .form-table-sign-up-button-sign-in {
-    width: 100px;
-    color: #20a8d8;
+    width: 100%;
     text-align: center;
     line-height: 30px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
   .back-home-page-button {
     width: 100px;
@@ -554,59 +463,6 @@ html {
     line-height: 34px;
     transition: 0.5s;
   }
-  .form-part {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-    position: relative;
-    margin-top: 25px;
-  }
-  .form-part > label {
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    color: rgb(175, 175, 175);
-    transition: 0.25s;
-    font-size: 16px;
-    line-height: 16px;
-    background-color: white;
-    padding: 0 4px;
-  }
-  .form-part > input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid rgb(175, 175, 175);
-    font-size: 16px;
-    line-height: 42px;
-    border-radius: 3px;
-    text-indent: 10px;
-    outline: none;
-    background: none;
-    transition: 0.25s;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-  }
-  .form-part > input:hover {
-    border: 1px solid black;
-  }
-
-  .form-part > input:focus {
-    border: 1px solid cornflowerblue;
-  }
-  .form-part > input:focus + label {
-    font-size: 13px;
-    top: -6.5px;
-    color: cornflowerblue;
-  }
-  .form-part > input:valid + label {
-    font-size: 13px;
-    top: -6.5px;
-  }
   .label-head {
     padding-top: 20px;
     border-top: 1px solid rgb(175, 175, 175);
@@ -645,14 +501,7 @@ html {
     font-weight: 600;
   }
   .form-table-notification {
-    font-size: 16px;
-    line-height: 25px;
-    font-family: Roboto;
-    font-weight: 400;
-    text-align: center;
-    color: red;
-    padding-bottom: 15px;
-    height: 25px;
+    height: 15px;
   }
   .empty-check-input {
     background-color: rgba(0, 0, 0, 0.9);
@@ -779,6 +628,7 @@ html {
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
   .form-table-sign-in-button-sign-up:hover {
     cursor: pointer;
@@ -799,13 +649,13 @@ html {
     background-color: red;
   }
   .form-table-sign-up-button-sign-in {
-    width: 100px;
-    color: #20a8d8;
+    width: 100%;
     text-align: center;
     line-height: 30px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
   .back-home-page-button {
     width: 100px;
@@ -875,59 +725,6 @@ html {
     line-height: 34px;
     transition: 0.5s;
   }
-  .form-part {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-    position: relative;
-    margin-top: 25px;
-  }
-  .form-part > label {
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    color: rgb(175, 175, 175);
-    transition: 0.25s;
-    font-size: 16px;
-    line-height: 16px;
-    background-color: white;
-    padding: 0 4px;
-  }
-  .form-part > input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid rgb(175, 175, 175);
-    font-size: 16px;
-    line-height: 42px;
-    border-radius: 3px;
-    text-indent: 10px;
-    outline: none;
-    background: none;
-    transition: 0.25s;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-  }
-  .form-part > input:hover {
-    border: 1px solid black;
-  }
-
-  .form-part > input:focus {
-    border: 1px solid cornflowerblue;
-  }
-  .form-part > input:focus + label {
-    font-size: 13px;
-    top: -6.5px;
-    color: cornflowerblue;
-  }
-  .form-part > input:valid + label {
-    font-size: 13px;
-    top: -6.5px;
-  }
   .label-head {
     padding-top: 20px;
     border-top: 1px solid rgb(175, 175, 175);
@@ -966,14 +763,7 @@ html {
     font-weight: 600;
   }
   .form-table-notification {
-    font-size: 16px;
-    line-height: 25px;
-    font-family: Roboto;
-    font-weight: 400;
-    text-align: center;
-    color: red;
-    padding-bottom: 15px;
-    height: 25px;
+    height: 15px;
   }
   .empty-check-input {
     background-color: rgba(0, 0, 0, 0.9);
@@ -1120,13 +910,13 @@ html {
     background-color: red;
   }
   .form-table-sign-up-button-sign-in {
-    width: 100px;
-    color: #20a8d8;
+    width: 100%;
     text-align: center;
     line-height: 30px;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
   .back-home-page-button {
     width: 100px;

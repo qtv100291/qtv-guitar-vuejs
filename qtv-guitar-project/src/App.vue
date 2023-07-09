@@ -1,5 +1,5 @@
 <template>
-  <confirm-modal></confirm-modal>
+  <confirm-modal v-if="isOpen"></confirm-modal>
   <header-desktop v-if="!notShowHeaderAndFooter"></header-desktop>
   <header-mobile v-if="!notShowHeaderAndFooter"></header-mobile>
   <router-view></router-view>
@@ -16,6 +16,8 @@ import ConfirmModal from "./components/common/ConfirmModal.vue";
 import { getLocalStorage } from "@/utils/common";
 import { LOCAL_SHOPPING_CART_NAME } from "@/utils/constantValue";
 import { useCartStore } from "./stores/cart";
+import { useModalStore } from "./stores/confirmModal";
+import { mapState } from "pinia";
 
 export default {
   name: "App",
@@ -30,13 +32,9 @@ export default {
     notShowHeaderAndFooter() {
       return this.$route.meta.isNotShow;
     },
+    ...mapState(useModalStore, ["isOpen"]),
   },
   mounted() {
-    const scriptGoogle = document.createElement("script");
-    scriptGoogle.src = "https://accounts.google.com/gsi/client";
-    scriptGoogle.defer = true;
-    scriptGoogle.async = true;
-    document.head.appendChild(scriptGoogle);
     const cartStore = useCartStore();
     const data = getLocalStorage(LOCAL_SHOPPING_CART_NAME);
     if (data) {

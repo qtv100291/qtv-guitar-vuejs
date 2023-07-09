@@ -1,0 +1,13 @@
+{
+  "User not found": "Người dùng không tồn tại",
+  "server error": "Đã xảy ra lỗi",
+  "Your email is already used": "Email này đã được sử dụng",
+  "Created User": "Đăng kí thành công",
+  "Password incorrect": "Sai mật khẩu đăng nhập",
+  "User Updated": "Thông tin đã được cập nhật thành công",
+  "Uploaded the image successfully": "Avatar được upload thành công",
+  "Not image file": "File tải lên phải là file ảnh",
+  "File too large": "Ảnh vượt quá 1MB",
+  "Shopping cart updated": "Update giỏ hàng thành công",
+  "Sigin succes": "Đăng nhập thành công"
+}

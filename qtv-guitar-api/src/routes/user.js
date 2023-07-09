@@ -2,8 +2,10 @@ const express = require("express");
 const { User, validate } = require("../models/user");
 const { hashPassword, comparePassword } = require("../utils/hashPassword");
 const { generateToken } = require("../utils/generateToken");
+const { getTime } = require("../utils/additionalFunction");
 const Busboy = require("busboy");
 const cloudinary = require("cloudinary");
+const jwtDecode = require("jwt-decode");
 
 const router = express.Router();
 
@@ -27,6 +29,7 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     password: hashedPassword,
     name: req.body.name,
+    createDate: getTime(),
   });
   try {
     await user.save();
@@ -61,9 +64,52 @@ router.post("/login", async (req, res) => {
   } else return res.status(401).json({ message: "Password incorrect" });
 });
 
-router.post("/login-google", async(req, res) => {
-  
-})
+router.post("/login-google", async (req, res) => {
+  if (req.method !== "POST") return;
+  const { googleAccessToken } = req.body;
+  const userData = jwtDecode(googleAccessToken);
+  const { name, email, sub: userID, picture } = userData;
+
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      const user = new User({
+        email,
+        name,
+        platform: "google",
+        createDate: getTime(),
+        avatar: picture,
+      });
+      await user.save();
+      const payload = {
+        email,
+        id: user._id.valueOf(),
+      };
+      const [tokenKey, refreshTokenKey] = generateToken(payload);
+      await User.findOneAndUpdate({ email }, { refreshToken: refreshTokenKey });
+      // axios.post(
+      //   "https://qtv-music-shop-send-email.herokuapp.com/send-welcome-email",
+      //   {
+      //     clientEmail: email,
+      //   }
+      // );
+      return res
+        .status(200)
+        .json({ accessToken: tokenKey, refreshToken: refreshTokenKey });
+    }
+    const payload = {
+      email: user.email,
+      id: user._id.valueOf(),
+    };
+    const [tokenKey, refreshTokenKey] = generateToken(payload);
+    return res
+      .status(200)
+      .json({ accessToken: tokenKey, refreshToken: refreshTokenKey });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ message: "server error" });
+  }
+});
 
 router.patch("/updateUser", async (req, res) => {
   if (req.method !== "PATCH") return;
@@ -97,7 +143,7 @@ router.patch("/updateAvatar", async (req, res) => {
         if (err) return res.status(500).json({ message: "server error" });
         await User.findOneAndUpdate({ email }, { avatar: image.url });
         return res.status(200).json({
-          message: "Uploaded the file successfully",
+          message: "Uploaded the image successfully",
           urlAvatar: image.url,
         });
       }
@@ -113,11 +159,11 @@ router.patch("/updateAvatar", async (req, res) => {
       "file",
       async function (fieldname, file, filename, encoding, mimetype) {
         if (!mimetype.includes("image")) {
-          return res.status(406).json({ message: "not image file" });
+          return res.status(406).json({ message: "Not image file" });
         }
         file.on("limit", function () {
           file.destroy();
-          return res.status(413).json({ message: "file too large" });
+          return res.status(413).json({ message: "File too large" });
         });
         file.pipe(createUploader);
       }
@@ -125,7 +171,7 @@ router.patch("/updateAvatar", async (req, res) => {
     req.pipe(busboy);
   } catch (err) {
     if (err.name === "MongoServerError")
-      return res.status(500).json({ message: "server error" });
+      return res.status(500).json({ message: "Server error" });
     return res.status(401).json({ message: err.message });
   }
 });

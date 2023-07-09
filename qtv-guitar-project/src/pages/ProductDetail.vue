@@ -179,7 +179,7 @@ import { useRoute } from "vue-router";
 import { getGuitarData } from "../api/guitar.js";
 import { separator1000, getCssStyle } from "../utils/common";
 import { useCartStore } from "../stores/cart";
-import SliderImage from "@/components/common/ProductDetail/SliderImage.vue";
+import SliderImage from "@/components/ProductDetail/SliderImage.vue";
 
 export default {
   components: { SliderImage },

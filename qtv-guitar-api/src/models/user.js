@@ -97,7 +97,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    default: "",
   },
   platform: {
     type: String,
@@ -113,7 +113,7 @@ const userSchema = new mongoose.Schema({
   shoppingCart: { type: [ShoppingCartItemSchema], default: [] },
   address: { type: AddressSchema, default: {} },
   payment: { type: PaymentSchema, default: {} },
-  createDate: { type: String, default: "" },
+  createDate: { type: String, required: true },
   tradeHistory: { type: [TradeHistoryItemSchema], default: [] },
 });
 const User = new mongoose.model("user", userSchema);

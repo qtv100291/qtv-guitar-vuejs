@@ -2,9 +2,11 @@
   <Teleport to="body">
     <transition name="popup-container">
       <div class="popup-container" v-show="modalStore.isOpen">
-        <div class="popup-messenger">
-          Đã Thêm Vào Giỏ Hàng
-          <div class="check-mark-icon">
+        <div class="popup-messenger" ref="modalRef">
+          <div class="close-button" @click="closeButtonFunction">
+            <img src="/images/HomePage/x-mark 1.png" alt="" />
+          </div>
+          <div class="check-mark-icon" v-if="!modalStore.dangerMode">
             <div class="circle-left">
               <div
                 class="circle-left-rotate"
@@ -24,6 +26,12 @@
               <span :class="{ show: modalStore.isOpen }"></span>
             </div>
           </div>
+          <div class="check-mark-icon" v-else>
+            <div class="button-container">
+              <img src="" alt="" />
+            </div>
+          </div>
+          {{ modalStore.message }}
         </div>
       </div>
     </transition>
@@ -31,13 +39,38 @@
 </template>
 
 <script>
+import { onMounted, onUnmounted, ref } from "vue";
 import { useModalStore } from "../../stores/confirmModal";
+import { TIME_CONFIRM_MODAL } from "@/utils/constantValue";
 
 export default {
   setup() {
+    const modalRef = ref(null);
     const modalStore = useModalStore();
+
+    onMounted(() => {
+      if (!modalStore.dangerMode) {
+        setTimeout(() => {
+          modalStore.closeModal();
+        }, TIME_CONFIRM_MODAL);
+      } else window.addEventListener("click", outSideClick);
+    });
+    onUnmounted(() => {
+      if (modalStore.dangerMode)
+        window.removeEventListener("click", outSideClick);
+    });
+    function closeButtonFunction() {
+      modalStore.closeModal();
+    }
+    function outSideClick(event) {
+      console.log(event.target);
+      const isClickInside = modalRef.value.contains(event.target);
+      if (!isClickInside) modalStore.closeModal();
+    }
     return {
+      modalRef,
       modalStore,
+      closeButtonFunction,
     };
   },
 };
@@ -53,7 +86,28 @@ export default {
   opacity: 1;
 }
 
-@media only screen and (min-width: 1366px) and (max-width: 1439px) {
+.close-button {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: calc(100% - 10px);
+  top: -10px;
+  border-radius: 999px;
+  border: 1px solid black;
+  background-color: white;
+}
+.close-button img {
+  position: absolute;
+  top: calc(10px - 35%);
+  left: calc(10px - 35%);
+  width: 70%;
+  height: 70%;
+  border-radius: 999px;
+}
+.close-button:hover {
+  cursor: pointer;
+}
+@media only screen and (min-width: 1366px) {
   .popup-container {
     width: 100vw;
     height: 100vh;
@@ -94,7 +148,7 @@ export default {
     height: 40px;
   }
   .check-mark-icon {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 50px;
     height: 50px;
     border-radius: 999px;
@@ -230,7 +284,7 @@ export default {
     height: 40px;
   }
   .check-mark-icon {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 50px;
     height: 50px;
     border-radius: 999px;
@@ -382,7 +436,7 @@ export default {
     height: 40px;
   }
   .check-mark-icon {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 50px;
     height: 50px;
     border-radius: 999px;
@@ -534,7 +588,7 @@ export default {
     height: 40px;
   }
   .check-mark-icon {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 50px;
     height: 50px;
     border-radius: 999px;
@@ -686,7 +740,7 @@ export default {
     height: 40px;
   }
   .check-mark-icon {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 50px;
     height: 50px;
     border-radius: 999px;
@@ -838,7 +892,7 @@ export default {
     height: 40px;
   }
   .check-mark-icon {
-    margin-left: 15px;
+    margin-right: 15px;
     width: 50px;
     height: 50px;
     border-radius: 999px;

@@ -8,21 +8,23 @@
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
       :maxlength="maxLength ? maxLength : null"
+      @keydown="isOnlyDigit ? checkOnlyDigit(event) : null"
     />
     <label :for="id">{{ label }}</label>
-    <img
-      class="eye-icon"
-      v-if="typeInput === 'password' && !isHiddenPassword"
-      src="images/HomePage/eye.png"
-      @click="changePasswordVisibility"
-    />
-    <img
-      class="eye-icon"
-      v-if="typeInput === 'password' && isHiddenPassword"
-      src="images/HomePage/closeeye.png"
-      @click="changePasswordVisibility"
-    />
-    <div class="error" v-if="errorValue">{{ errorValue }}</div>
+    <div class="eye-icon" @click="changePasswordVisibility">
+      <img
+        v-if="typeInput === 'password' && !isHiddenPassword"
+        src="images/HomePage/eye.png"
+      />
+      <img
+        v-if="typeInput === 'password' && isHiddenPassword"
+        src="images/HomePage/closeeye.png"
+      />
+    </div>
+
+    <div class="error">
+      <span v-if="errorValue">{{ errorValue }}</span>
+    </div>
   </div>
 </template>
 
@@ -54,6 +56,10 @@ export default {
       type: Number,
       default: 0,
     },
+    isOnlyDigit: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ["update:modelValue"],
 
@@ -69,12 +75,35 @@ export default {
       else typeInputCal.value = "password";
     });
     function changePasswordVisibility() {
+      console.log("conga");
       isHiddenPassword.value = !isHiddenPassword.value;
+    }
+    function checkOnlyDigit(event) {
+      event = event ? event : window.event;
+      const keyAllowed = [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "Backspace",
+        "Delete",
+        "Tab",
+        "Home",
+        "End",
+      ];
+      if (!keyAllowed.includes(event.key)) event.preventDefault();
     }
     return {
       isHiddenPassword,
       typeInputCal,
       changePasswordVisibility,
+      checkOnlyDigit,
     };
   },
 };
@@ -87,25 +116,25 @@ export default {
   align-items: center;
   margin-top: 10px;
   position: relative;
-  margin-top: 25px;
+  margin-top: 10px;
 }
 .form-part > label {
   position: absolute;
-  top: 14px;
+  top: 12px;
   left: 6px;
   color: rgb(175, 175, 175);
   transition: 0.25s;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 16px;
   background-color: white;
   padding: 0 4px;
 }
 .form-part > input {
   width: 100%;
-  height: 42px;
+  height: 36px;
   border: 1px solid rgb(175, 175, 175);
-  font-size: 16px;
-  line-height: 42px;
+  font-size: 14px;
+  line-height: 36px;
   border-radius: 3px;
   text-indent: 10px;
   outline: none;
@@ -136,11 +165,24 @@ input:-webkit-autofill:active {
 }
 .eye-icon {
   position: absolute;
-  width: 25px;
-  left: calc(100% - 35px);
+  width: 20px;
+  left: calc(100% - 30px);
+  top: 10px;
   opacity: 0.4;
+}
+.eye-icon img {
+  width: 100%;
+  display: block;
+  margin: 0 auto;
 }
 .eye-icon:hover {
   cursor: pointer;
+}
+.error {
+  margin-top: 3px;
+  font-size: 13px;
+  color: red;
+  line-height: 18px;
+  min-height: 18px;
 }
 </style>

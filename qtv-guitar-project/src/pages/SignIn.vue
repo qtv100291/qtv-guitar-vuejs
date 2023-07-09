@@ -31,14 +31,21 @@
             :type-input="'password'"
             :label="'Mật Khẩu'"
           />
-          <div class="form-table-sign-in-lost-password">Quên Mật Khẩu ?</div>
-          <div class="form-table-sign-in-button-sign-in">ĐĂNG NHẬP</div>
+          <div class="form-table-sign-in-lost-password">
+            <router-link to="/dang-ky">Quên Mật Khẩu ?</router-link>
+          </div>
+          <div
+            class="form-table-sign-in-button-sign-in"
+            @click="checkInfoSignIn"
+          >
+            ĐĂNG NHẬP
+          </div>
           <div class="line-separated flex-center">
             <div class="line-separated-part"></div>
             <span class="line-separated-title">HOẶC</span>
             <div class="line-separated-part"></div>
           </div>
-          <google-button :windowWidth="windowWidth"></google-button>
+          <google-button :window-width="windowWidth" />
           <div class="form-table-sign-in-button-sign-up">
             Bạn chưa có tài khoản?
             <router-link to="/dang-ky">Đăng ký</router-link>
@@ -53,6 +60,14 @@
 import { reactive, onMounted, onBeforeMount, ref } from "vue";
 import InputComponent from "../components/common/InputComponent.vue";
 import GoogleButton from "@/components/LoginPage/GoogleButton.vue";
+import { login } from "../api/login";
+import {
+  composeFunction,
+  checkEmpty,
+  checkEmailValidation,
+} from "@/utils/common";
+import { useModalStore } from "@/stores/confirmModal";
+import { getServerMessage } from "@/utils/message";
 
 export default {
   components: { InputComponent, GoogleButton },
@@ -60,8 +75,14 @@ export default {
     const userInfo = reactive({});
     const userError = reactive({});
     const windowWidth = ref(0);
+    const checkCondition = {
+      email: [checkEmpty, checkEmailValidation],
+      password: [checkEmpty],
+    };
+    const modalStore = useModalStore();
     onMounted(() => {
       window.addEventListener("resize", changeWindowWidth);
+      windowWidth.value = window.innerWidth;
     });
     onBeforeMount(() => {
       window.removeEventListener("resize", changeWindowWidth);
@@ -71,10 +92,29 @@ export default {
       windowWidth.value = window.innerWidth;
     }
 
+    async function checkInfoSignIn() {
+      let isAllValid = true;
+      for (let item in userInfo) {
+        userError[item] = composeFunction(userInfo[item], checkCondition[item]);
+        if (userError[item]) isAllValid = false;
+      }
+      if (isAllValid) {
+        try {
+          await login({
+            email: userInfo.email,
+            password: userInfo.password,
+          });
+        } catch (err) {
+          modalStore.openModal(getServerMessage(err.data.message), true);
+        }
+      }
+    }
+
     return {
       userInfo,
       userError,
       windowWidth,
+      checkInfoSignIn,
     };
   },
 };
@@ -105,7 +145,6 @@ body {
   color: rgb(107, 107, 107);
   font-size: 14px;
 }
-
 .form-table-sign-in-button-sign-up a {
   color: #20a8d8;
   text-decoration: none;
@@ -167,59 +206,6 @@ body {
     line-height: 34px;
     transition: 0.5s;
   }
-  .form-part {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-    position: relative;
-    margin-top: 25px;
-  }
-  .form-part > label {
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    color: rgb(175, 175, 175);
-    transition: 0.25s;
-    font-size: 16px;
-    line-height: 16px;
-    background-color: white;
-    padding: 0 4px;
-  }
-  .form-part > input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid rgb(175, 175, 175);
-    font-size: 16px;
-    line-height: 42px;
-    border-radius: 3px;
-    text-indent: 10px;
-    outline: none;
-    background: none;
-    transition: 0.25s;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-  }
-  .form-part > input:hover {
-    border: 1px solid black;
-  }
-
-  .form-part > input:focus {
-    border: 1px solid cornflowerblue;
-  }
-  .form-part > input:focus + label {
-    font-size: 13px;
-    top: -6.5px;
-    color: cornflowerblue;
-  }
-  .form-part > input:valid + label {
-    font-size: 13px;
-    top: -6.5px;
-  }
   .label-head {
     padding-top: 20px;
     border-top: 1px solid rgb(175, 175, 175);
@@ -258,14 +244,7 @@ body {
     font-weight: 600;
   }
   .form-table-notification {
-    font-size: 16px;
-    line-height: 25px;
-    font-family: Roboto;
-    font-weight: 400;
-    text-align: center;
-    color: red;
-    padding-bottom: 15px;
-    height: 25px;
+    height: 15px;
   }
   .empty-check-input {
     background-color: rgba(0, 0, 0, 0.9);
@@ -353,12 +332,15 @@ body {
     border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
   }
   .form-table-sign-in-lost-password {
-    color: #20a8d8;
     font-size: 15px;
     text-align: right;
     margin-top: 10px;
   }
-  .form-table-sign-in-lost-password:hover {
+  .form-table-sign-in-lost-password a {
+    text-decoration: none;
+    color: #20a8d8;
+  }
+  .form-table-sign-in-lost-password a:hover {
     cursor: pointer;
   }
   .form-table-sign-in-button-sign-in {
@@ -391,6 +373,7 @@ body {
     margin: 0 auto;
     margin-top: 25px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
 
   .form-table-sign-up-button-sign-up {
@@ -478,59 +461,6 @@ body {
     line-height: 34px;
     transition: 0.5s;
   }
-  .form-part {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-    position: relative;
-    margin-top: 25px;
-  }
-  .form-part > label {
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    color: rgb(175, 175, 175);
-    transition: 0.25s;
-    font-size: 16px;
-    line-height: 16px;
-    background-color: white;
-    padding: 0 4px;
-  }
-  .form-part > input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid rgb(175, 175, 175);
-    font-size: 16px;
-    line-height: 42px;
-    border-radius: 3px;
-    text-indent: 10px;
-    outline: none;
-    background: none;
-    transition: 0.25s;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-  }
-  .form-part > input:hover {
-    border: 1px solid black;
-  }
-
-  .form-part > input:focus {
-    border: 1px solid cornflowerblue;
-  }
-  .form-part > input:focus + label {
-    font-size: 13px;
-    top: -6.5px;
-    color: cornflowerblue;
-  }
-  .form-part > input:valid + label {
-    font-size: 13px;
-    top: -6.5px;
-  }
   .label-head {
     padding-top: 20px;
     border-top: 1px solid rgb(175, 175, 175);
@@ -569,14 +499,7 @@ body {
     font-weight: 600;
   }
   .form-table-notification {
-    font-size: 16px;
-    line-height: 25px;
-    font-family: Roboto;
-    font-weight: 400;
-    text-align: center;
-    color: red;
-    padding-bottom: 15px;
-    height: 25px;
+    height: 15px;
   }
   .empty-check-input {
     background-color: rgba(0, 0, 0, 0.9);
@@ -664,12 +587,15 @@ body {
     border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
   }
   .form-table-sign-in-lost-password {
-    color: #20a8d8;
     font-size: 15px;
     text-align: right;
     margin-top: 10px;
   }
-  .form-table-sign-in-lost-password:hover {
+  .form-table-sign-in-lost-password a {
+    text-decoration: none;
+    color: #20a8d8;
+  }
+  .form-table-sign-in-lost-password a:hover {
     cursor: pointer;
   }
   .form-table-sign-in-button-sign-in {
@@ -697,12 +623,12 @@ body {
   }
   .form-table-sign-in-button-sign-up {
     width: 100%;
-
     text-align: center;
     line-height: 30px;
     margin: 0 auto;
     margin-top: 25px;
     margin-bottom: 30px;
+    font-size: 14px;
   }
   .form-table-sign-in-button-sign-up a:hover {
     cursor: pointer;
@@ -793,59 +719,6 @@ body {
     line-height: 34px;
     transition: 0.5s;
   }
-  .form-part {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 10px;
-    position: relative;
-    margin-top: 25px;
-  }
-  .form-part > label {
-    position: absolute;
-    top: 14px;
-    left: 6px;
-    color: rgb(175, 175, 175);
-    transition: 0.25s;
-    font-size: 16px;
-    line-height: 16px;
-    background-color: white;
-    padding: 0 4px;
-  }
-  .form-part > input {
-    width: 100%;
-    height: 42px;
-    border: 1px solid rgb(175, 175, 175);
-    font-size: 16px;
-    line-height: 42px;
-    border-radius: 3px;
-    text-indent: 10px;
-    outline: none;
-    background: none;
-    transition: 0.25s;
-  }
-  input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-  }
-  .form-part > input:hover {
-    border: 1px solid black;
-  }
-
-  .form-part > input:focus {
-    border: 1px solid cornflowerblue;
-  }
-  .form-part > input:focus + label {
-    font-size: 13px;
-    top: -6.5px;
-    color: cornflowerblue;
-  }
-  .form-part > input:valid + label {
-    font-size: 13px;
-    top: -6.5px;
-  }
   .label-head {
     padding-top: 20px;
     border-top: 1px solid rgb(175, 175, 175);
@@ -884,14 +757,7 @@ body {
     font-weight: 600;
   }
   .form-table-notification {
-    font-size: 16px;
-    line-height: 25px;
-    font-family: Roboto;
-    font-weight: 400;
-    text-align: center;
-    color: red;
-    padding-bottom: 15px;
-    height: 25px;
+    height: 15px;
   }
   .empty-check-input {
     background-color: rgba(0, 0, 0, 0.9);
@@ -979,12 +845,15 @@ body {
     border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
   }
   .form-table-sign-in-lost-password {
-    color: #20a8d8;
     font-size: 15px;
     text-align: right;
     margin-top: 10px;
   }
-  .form-table-sign-in-lost-password:hover {
+  .form-table-sign-in-lost-password a {
+    text-decoration: none;
+    color: #20a8d8;
+  }
+  .form-table-sign-in-lost-password a:hover {
     cursor: pointer;
   }
   .form-table-sign-in-button-sign-in {

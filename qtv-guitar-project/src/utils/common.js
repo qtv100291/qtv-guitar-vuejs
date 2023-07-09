@@ -1,3 +1,5 @@
+import { getClientMessage } from "./message";
+
 function sortAToZ(array) {
   const arraySorted = array.sort((a, b) => {
     return a.albumName.localeCompare(b.albumName);
@@ -129,29 +131,30 @@ function getLocalStorage(name) {
   return data;
 }
 
-function composeFunction(input, ...funcArray) {
+function composeFunction(input, funcArray) {
   let text = "";
   for (let i = 0; i < funcArray.length; i++) {
     text = funcArray[i](input);
     if (text) return text;
   }
+  return text;
 }
 
 function checkEmpty(input) {
   if (input.length) return "";
-  return "Bạn phải điền vào mục này";
+  return getClientMessage("required field");
 }
 
 function checkEmailValidation(input) {
   // eslint-disable-next-line no-useless-escape
   const MAIL_FORMAT = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   if (input.match(MAIL_FORMAT)) return "";
-  return "Email không đúng định dạng";
+  return getClientMessage("invalid email");
 }
 
 function checkRecheckPassword(firstInput, secondInput) {
   if (firstInput === secondInput) return "";
-  else return "Mật khẩu không khớp";
+  else return getClientMessage("do not match password");
 }
 
 function onInputOnlyDigit(input) {

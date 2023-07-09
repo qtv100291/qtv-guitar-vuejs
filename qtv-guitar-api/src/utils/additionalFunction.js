@@ -44,7 +44,17 @@ function GetPaymentInfo(data, shoppingCart) {
   this.orderList = [...shoppingCart];
 }
 
-export default {
+function getTime() {
+  const time = new Date();
+  const year = time.getFullYear();
+  const date = time.getDate() < 10 ? `0${time.getDate()}` : time.getDate();
+  const month =
+    time.getMonth() < 9 ? `0${time.getMonth() + 1}` : time.getMonth() + 1;
+  return `${date} - ${month} - ${year}`;
+}
+
+module.exports = {
   GetPaymentInfo,
   buildHistoryTrade,
+  getTime,
 };
