@@ -67,6 +67,7 @@ import {
   checkEmailValidation,
 } from "@/utils/common";
 import { useModalStore } from "@/stores/confirmModal";
+import { useLoadingModalStore } from "@/stores/loadingModal";
 import { getServerMessage } from "@/utils/message";
 
 export default {
@@ -80,6 +81,7 @@ export default {
       password: [checkEmpty],
     };
     const modalStore = useModalStore();
+    const loadingModalStore = useLoadingModalStore();
     onMounted(() => {
       window.addEventListener("resize", changeWindowWidth);
       windowWidth.value = window.innerWidth;
@@ -100,12 +102,18 @@ export default {
       }
       if (isAllValid) {
         try {
+          loadingModalStore.openLoadingModal();
           await login({
             email: userInfo.email,
             password: userInfo.password,
           });
+          modalStore.openModal(getServerMessage("Sigin succes"), false, () => {
+            window.location = "/";
+          });
         } catch (err) {
-          modalStore.openModal(getServerMessage(err.data.message), true);
+          // modalStore.openModal(getServerMessage(err.data.message), true);
+        } finally {
+          // loadingModalStore.closeLoadingModal();
         }
       }
     }

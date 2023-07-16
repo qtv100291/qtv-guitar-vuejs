@@ -5,6 +5,7 @@
 import { watch } from "vue";
 import { loginGoogle } from "../../api/loginGoogle";
 import { useModalStore } from "../../stores/confirmModal";
+import { useLoadingModalStore } from "../../stores/loadingModal";
 import { getServerMessage } from "@/utils/message";
 
 export default {
@@ -16,6 +17,7 @@ export default {
       () => {
         async function handleCredentialResponse(response) {
           try {
+            useLoadingModalStore.openLoadingModal();
             await loginGoogle({ googleAccessToken: response.credential });
             modalStore.openModal(
               getServerMessage("Sigin succes"),
@@ -24,16 +26,10 @@ export default {
                 window.location = "/";
               }
             );
-            // MySwal.fire({
-            //   icon: "success",
-            //   html: "Đăng Nhập Thành Công",
-            //   showConfirmButton: false,
-            //   timer: 1250,
-            // }).then(() => {
-            //   window.location = "/";
-            // });
           } catch (err) {
             console.log(err);
+          } finally {
+            useLoadingModalStore.closeLoadingModal;
           }
         }
         // eslint-disable-next-line no-undef

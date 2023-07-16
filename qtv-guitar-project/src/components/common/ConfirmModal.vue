@@ -26,10 +26,12 @@
               <span :class="{ show: modalStore.isOpen }"></span>
             </div>
           </div>
-          <div class="check-mark-icon" v-else>
-            <div class="button-container">
-              <img src="" alt="" />
-            </div>
+          <div
+            class="check-mark-icon error-icon"
+            :class="{ show: modalStore.isOpen }"
+            v-else
+          >
+            <div class="x-mark-icon" :class="{ show: modalStore.isOpen }"></div>
           </div>
           {{ modalStore.message }}
         </div>
@@ -63,9 +65,10 @@ export default {
       modalStore.closeModal();
     }
     function outSideClick(event) {
-      console.log(event.target);
-      const isClickInside = modalRef.value.contains(event.target);
-      if (!isClickInside) modalStore.closeModal();
+      if (modalRef.value) {
+        const isClickInside = modalRef.value.contains(event.target);
+        if (!isClickInside) modalStore.closeModal();
+      }
     }
     return {
       modalRef,
@@ -86,14 +89,79 @@ export default {
   opacity: 1;
 }
 
+.check-mark-icon.error-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 999px;
+  border: 4px solid red;
+  position: relative;
+  transition: 1s;
+  opacity: 0;
+}
+
+.check-mark-icon.error-icon.show {
+  opacity: 1;
+}
+.x-mark-icon::before {
+  content: "";
+  width: 4px;
+  height: 30px;
+  position: absolute;
+  background-color: red;
+  top: 10px;
+  left: 23px;
+}
+.x-mark-icon::after {
+  content: "";
+  width: 30px;
+  height: 4px;
+  position: absolute;
+  background-color: red;
+  top: 23px;
+  left: 10px;
+}
+.x-mark-icon.show::before,
+.x-mark-icon.show::after {
+  animation: move-x-button 0.4s 0.1s linear forwards,
+    scale-x-button 0.8s 0.5s linear forwards;
+}
+
+@keyframes scale-x-button {
+  0% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.3);
+  }
+  66% {
+    transform: scale(0.7);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes move-x-button {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(-30deg);
+  }
+  80% {
+    transform: rotate(20deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
 .close-button {
   position: absolute;
   width: 20px;
   height: 20px;
-  left: calc(100% - 10px);
-  top: -10px;
+  left: calc(100% - 25px);
+  top: 5px;
   border-radius: 999px;
-  border: 1px solid black;
   background-color: white;
 }
 .close-button img {
@@ -107,6 +175,11 @@ export default {
 .close-button:hover {
   cursor: pointer;
 }
+
+.popup-messenger {
+  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+    0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+}
 @media only screen and (min-width: 1366px) {
   .popup-container {
     width: 100vw;
@@ -114,7 +187,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;
@@ -250,7 +323,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;
@@ -402,7 +475,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;
@@ -554,7 +627,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;
@@ -706,7 +779,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;
@@ -858,7 +931,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;
@@ -1010,7 +1083,7 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.3);
     /* display: none;
     opacity: 0; */
     transition: opacity 0.25s;

@@ -1,5 +1,6 @@
 <template>
   <confirm-modal v-if="isOpen"></confirm-modal>
+  <loading-modal v-if="isLoadingOpen"></loading-modal>
   <header-desktop v-if="!notShowHeaderAndFooter"></header-desktop>
   <header-mobile v-if="!notShowHeaderAndFooter"></header-mobile>
   <router-view></router-view>
@@ -13,10 +14,12 @@ import HeaderMobile from "./components/common/HeaderMobile.vue";
 import ScrollingButton from "./components/common/ScrollingButton.vue";
 import FooterPart from "./components/common/FooterPart.vue";
 import ConfirmModal from "./components/common/ConfirmModal.vue";
+import LoadingModal from "./components/common/LoadingModal.vue";
 import { getLocalStorage } from "@/utils/common";
 import { LOCAL_SHOPPING_CART_NAME } from "@/utils/constantValue";
 import { useCartStore } from "./stores/cart";
 import { useModalStore } from "./stores/confirmModal";
+import { useLoadingModalStore } from "./stores/loadingModal";
 import { mapState } from "pinia";
 
 export default {
@@ -27,12 +30,14 @@ export default {
     ScrollingButton,
     FooterPart,
     ConfirmModal,
+    LoadingModal,
   },
   computed: {
     notShowHeaderAndFooter() {
       return this.$route.meta.isNotShow;
     },
     ...mapState(useModalStore, ["isOpen"]),
+    ...mapState(useLoadingModalStore, ["isLoadingOpen"]),
   },
   mounted() {
     const cartStore = useCartStore();
